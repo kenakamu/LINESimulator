@@ -515,12 +515,13 @@ function toggleKeyboard() {
 
 var zoom = 1;
 function zoomin() {
+ var rootStyle = window.getComputedStyle($(':root')[0]);
   zoom += 0.1;
-  $('.simulator')[0].style.zoom = zoom;
+  $('.simulator')[0].style.transform = `scale(${zoom})`;
 }
 function zoomout() {
   zoom -= 0.1;
-  $('.simulator')[0].style.zoom = zoom;
+  $('.simulator')[0].style.transform = `scale(${zoom})`;
 }
 
 function toggleMoreMenu() {

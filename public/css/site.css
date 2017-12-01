@@ -1,4 +1,5 @@
 :root {
+    --chat-zoom: 1;
     --chat-width: 414px;
     --chat-height: 736px;
     --chat-background: rgb(216,220,228);
@@ -53,6 +54,7 @@ body{
     margin-top: 24px;
     position: relative;  
     width: calc(var(--chat-width) + 50px);
+    transform-origin: 0px 0px 0px;
 }
 
 .chat-area {  
