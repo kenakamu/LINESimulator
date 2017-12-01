@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/site.css">
+</head>
+
+<body>
+    <div class="col-md-12">
+        <!-- zoom menu  -->
+        <div class="menu">
+            <div>
+                <i class="fa fa-search-plus fa-inverse fa-3x" onclick="zoomin();">
+                    <span>zoom in</span>
+                </i>
+            </div>
+            <div>
+                <i class="fa fa-search-minus fa-inverse fa-3x" onclick=zoomout();>
+                    <span>zoom out</span>
+                </i>
+            </div>
+            <div>
+                <i class="fa fa-gear fa-inverse fa-3x" onclick=toggleSettings();>
+                    <span>change settings such as user id, server address.</span>
+                </i>
+            </div>
+            <div>
+                <i class="fa fa-keyboard-o fa-inverse fa-3x" onclick="toggleKeyboard();">
+                    <span>Open/Close keyboard.</span>
+                </i>
+            </div>
+            <div>
+                <i class="fa fa-caret-square-o-right fa-inverse fa-3x" onclick="toggleMoreMenu();">
+                    <span>Send non-text messages.</span>
+                </i>
+            </div>
+            <!-- <div>
+                <i class="fa fa-plus-square fa-inverse fa-3x" onclick="addSimulator();">
+                    <span>Add additional emulator</span>
+                </i>
+            </div> -->
+        </div>
+        <!-- LINE client simulator -->
+        <div class="simulator">
+            <div class="chat-area">
+                <div class="chat-header">
+                    <div>
+                        <div class="col-xs-4">line
+                            <span>
+                                <i class="fa fa-wifi"></i>
+                            </span>
+                        </div>
+                        <div class="col-xs-4 time"></div>
+                        <div class="col-xs-4 icon-right">
+                            <span>
+                                <i class="fa fa-location-arrow header-icon"></i>
+                                <i class="fa fa-bluetooth-b header-icon"></i>
+                                <i class="fa fa-battery-2 header-icon"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-xs-3 icon-left">
+                            <span>
+                                <i class="fa fa-angle-left fa-2x header-icon"></i>
+                            </span>
+                        </div>
+                        <div class="col-xs-6 bot-title">
+                            bot
+                        </div>
+                        <div class="col-xs-3 icon-right">
+                            <span>
+                                <i class="fa fa-home header-icon"></i>
+                                <i class="fa fa-angle-down fa-2x header-icon"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-thread">
+                    <!-- <ul class="chat-body"> -->
+                    <ul>
+                        <li class="chat-top-space"></li>
+                    </ul>
+                </div>
+                <div class="chat-box">
+                    <div class="chat-bar">
+                        <i class="fa fa-keyboard-o fa-inverse fa-lg" onclick="toggleKeyboard();"></i>
+                        <span class="fa-stack" onclick="toggleMoreMenu();">
+                            <i class="fa fa-square fa-stack-2x fa-inverse"></i>
+                            <i class="fa fa-angle-right fa-stack-1x"></i>
+                        </span>
+                        <span>
+                            <input type="text" class="chat-textarea" id="message-to-send" placeholder="Enter a message"></input>
+                        </span>
+                        <a onclick="sendFromChatBox()">
+                            <i class="fa fa-paper-plane fa-inverse"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="chat-keyboard">
+                    <img src="/img/keyboard.png" />
+                </div>
+                <!-- end chat-message -->
+            </div>
+        </div>
+
+        <!-- Send media, location, sticker, etc.  -->
+        <div class="moreMenu">
+            <div class="row">
+                <h4>Send file</h4>
+                <div class="col-md-10">
+                    <input type=file id="filename" directory />
+                </div>
+                <a class="col-md-2 btn btn-sm btn-success" onclick="uploadFile()">Upload</a>
+            </div>
+            <div class="row">
+                <h4>Send Sticker</h4>
+                <div class="col-md-10">
+                    <div class="col-md-3 row">PackageId: </div>
+                    <div class="col-md-9">
+                        <input type=text placeholder="PackageId" id="packageId" value="" />
+                    </div>
+                    <div class="col-md-3 row">StickerId: </div>
+                    <div class="col-md-9">
+                        <input type=text placeholder="StickerId" id="stickerId" value="" />
+                    </div>
+                </div>
+                <a class="col-md-2 btn btn-sm btn-success" onclick="sendSticker()">Send</a>
+            </div>
+            <div class="row">
+                <h4>Send Address</h4>
+                <div class="col-md-10">
+                    <div class="col-md-3 row">Title: </div>
+                    <div class="col-md-9">
+                        <input type=text placeholder="Title" id="title" value="" />
+                    </div>
+                    <div class="col-md-3 row">Address: </div>
+                    <div class="col-md-9">
+                        <input type=text placeholder="Address" id="address" value="" />
+                    </div>
+                    <div class="col-md-3 row">Latitude: </div>
+                    <div class="col-md-9">
+                        <input type=text placeholder="Latitude" id="latitude" value="" />
+                    </div>
+                    <div class="col-md-3 row">Longitude: </div>
+                    <div class="col-md-9">
+                        <input type=text placeholder="Longitude" id="longitude" value="" />
+                    </div>
+                </div>
+                <a class="col-md-2 btn btn-sm  btn-success" onclick="sendAddress()">Send</a>
+            </div>
+            <div class="row">
+                <h4>System Messages</h4>
+                <div class="col-md-12">
+                    <a class="btn btn-primary" onclick="sendFollow()">Follow</a>
+                    <a class="btn btn-primary" onclick="sendUnfollow()">Unfollow</a>
+                    <a class="btn btn-primary" onclick="sendJoin()">Join</a>
+                    <a class="btn btn-primary" onclick="sendLeave()">Leave</a>
+                </div>
+            </div>
+            <div class="row">
+                <h4>Beacon</h4>
+                <div class="col-md-10">
+                    <div class="col-md-3 row">HWID: </div>
+                    <div class="col-md-9">
+                        <input type=text placeholder="HWID" id="beacon_hwid" value="" />
+                    </div>
+                    <div class="col-md-3 row">Type: </div>
+                    <select class="col-md-8" name="beacon_hwid" size="1" style="font-size:18px;margin-left:15px;color:blacK">
+                        <option value="enter">enter</option>
+                        <option value="leave">leave</option>
+                        <option value="banner">banner</option>
+                    </select>
+                </div>
+                <a class="col-md-2 btn btn-sm btn-success" onclick="sendBeacon()">Send</a>
+            </div>
+        </div>
+        <div class="settings">
+            <div class="row">
+                <h4>UserId:</h4>
+                <div class="col-md-8">
+                    <input type=text placeholder="some user id" id="userId" value="" />
+                </div>
+            </div>
+            <div class="row">
+                    <h4>channelSecret:</h4>
+                    <div class="col-md-8">
+                        <input type=text placeholder="Channel Secret" id="channelSecret" value="" />
+                    </div>
+                </div>
+            <div class="row">
+                <h4>channelToken:</h4>
+                <div class="col-md-8">
+                    <input type=text placeholder="Channel Token" id="channelToken" value="" />
+                </div>
+            </div>
+            <div class="row">
+                <h4>Bot API Server Address:</h4>
+                <div class="col-md-8">
+                    <input type=text placeholder="http://localhost:1590/api/linebot" id="botAPIAddress" value="" />
+                </div>
+            </div>
+            <div class="update">
+                <a class="col-md-2 btn btn-success" onclick="setSettings()">CONNECT</a>
+                <div class="col-md-12 warning"></div>
+            </div>
+        </div>
+        <!-- Raw Data -->
+        <div class="chat-raw" tabindex="0">
+            <i class="fa fa-window-close fa-inverse fa-2x" onclick="closeChatRaw();"></i>
+            <pre id="rawdata">               
+            </pre>
+        </div>
+    </div>
+
+    <script src="https://use.fontawesome.com/3a3680e4e7.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/linesimulator.js"></script>
+</body>
+
+</html>

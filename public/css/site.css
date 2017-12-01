@@ -1,0 +1,463 @@
+:root {
+    --chat-width: 414px;
+    --chat-height: 736px;
+    --chat-background: rgb(216,220,228);
+    --chat-header-height: 64px;
+    --chat-highlight-color: rgb(54,67,94);
+    --chat-keyboard-height: 236px;
+    --chat-box-height: 50px;
+    --chat-text-max-width: 300px;
+    --chat-img-width: 250px;
+    --chat-video-width: 250px;
+    --chat-template-buttons-width: 300px;
+    --chat-template-buttons-image-height: 150px;
+    --chat-template-highlight-color: rgb(87,118,165);
+    --chat-template-confirm-width: 300px;
+}
+body{
+    background: rgb(52,57,62);
+}
+.hide{
+    display: none;
+}
+
+/* menu area */
+.menu{
+    float: left;
+    padding: 24px;
+    position: relative;
+    text-align: center;
+}
+.menu i span {
+    background: black;
+    border-color: white;
+    border-style: solid;
+    border-width: 3px;
+    display: none;
+    font-size: 20px;
+    padding: 10px;
+    position: absolute;
+    width: 300px;
+    z-index: 20;
+}  
+.menu i:hover span {
+    display: block
+}
+
+/*#region simulator*/
+.simulator{
+    background: black;
+    border-radius: 25px;
+    float: left;  
+    height: calc(var(--chat-height) + 150px);
+    margin-top: 24px;
+    position: relative;  
+    width: calc(var(--chat-width) + 50px);
+}
+
+.chat-area {  
+    height: var(--chat-height);
+    margin: auto;
+    padding-top: 75px;
+    width: var(--chat-width);
+}
+
+/*#region chat header*/
+.chat-header {  
+    background: var(--chat-background);
+    height: var(--chat-header-height);
+    margin: auto;
+    opacity: 0.95;
+    position: absolute;
+    width: var(--chat-width);
+    z-index: 10;
+}
+.chat-header .time{
+    text-align: center;
+}
+.chat-header .bot-title {
+    color: var(--chat-highlight-color);
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 5px;
+    text-align: center;
+}
+.chat-header .icon-right {
+    text-align: right;
+}
+.chat-header .icon-left {
+    text-align: left;
+}
+.chat-header .header-icon {
+    vertical-align: middle;
+}
+/*#endregion chat header*/
+
+/*#region chat thread*/
+.chat-thread {
+    width: var(--chat-width);
+    background: var(--chat-background);
+    list-style: none;   
+}
+.chat-thread .chat-bot {
+    float: left;
+    margin-left: 50px;
+    margin-right: 30px;
+    z-index: 2;
+}
+.chat-thread .chat-user {
+    float: right;
+}	
+.chat-thread ul::-webkit-scrollbar {
+    background: transparent;
+    width: 0px;
+}
+.chat-thread span{ 
+    display: none;
+}
+.chat-thread ul {
+    height: calc(var(--chat-height) - var(--chat-box-height));
+    margin-bottom: 0px;    
+    overflow-y: scroll;    
+    overflow-x: hidden;
+    padding-left: 2px;
+    width: 100%;
+}
+.chat-thread.keyboard ul{
+    height: calc(var(--chat-height) - var(--chat-box-height) - var(--chat-keyboard-height));
+}
+.chat-thread .chat-top-space {
+    height: var(--chat-header-height);
+    width: var(--chat-width);
+}
+/*#endregion chat thread*/
+
+/*#region Brown circle icon */
+.chat-thread .chat-bot:before {
+    position: absolute;
+    top: 0;
+    width: 35px;
+    height: 35px;
+    border-radius: 35px;
+    background-image: url(data:image/jpeg;base64,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);
+    content: '';
+}
+.chat-thread .chat-text.chat-bot:before {
+    left: -50px;
+}
+.chat-thread .chat-img.chat-bot:before, .chat-thread .chat-sticker.chat-bot:before { /* Each type has different offset */
+    left: -36px;
+}
+.chat-thread .chat-template.chat-bot:before { /* Each type has different offset */
+    left: -45px;
+}
+.chat-thread .chat-icon-only{ /* Each type has different offset */
+    left: -45px;
+}
+/*#endregion Brown circle icon */
+
+/*#region chat-text*/
+.chat-text {
+    border-radius: 60px;
+    clear: both;
+    display: inline-block;
+    font: 16px/20px 'Noto Sans', sans-serif;
+    margin-bottom: 20px;
+    max-width: var(--chat-text-max-width);
+    position: relative;
+    padding: 10px 20px 10px 20px;
+    word-break: break-all;
+    z-index: 2;
+}
+.chat-text:after {
+    position: absolute;
+    top: 10px;
+    content: '';
+    width: 0px;
+    height: 0;
+    border-top: 8px solid white;
+    z-index: -1;
+}
+.chat-text.chat-bot {
+    background-color: white;
+    margin-left: 50px;
+}
+.chat-text.chat-bot:after {
+    border-left: 50px solid transparent;
+    left: -15px;
+}
+.chat-text.chat-user {      
+    background: var(--chat-highlight-color);
+    color: white;
+    margin-right: 15px;
+}			
+.chat-text.chat-user:after {
+    border-top-color :var(--chat-highlight-color);
+    border-right: 50px solid transparent;
+    right: -15px;
+}
+/*#endregion chat-text*/
+
+/*#region chat-image*/
+.chat-img {
+    clear: both;
+    display: inline-block;
+    padding-bottom: 20px;
+    position: relative;
+}
+.chat-img.chat-bot{
+    margin-left: 36px;
+}
+.chat-img.chat-user{
+    margin-right: 5px;
+}
+.chat-img img {
+    max-width: var(--chat-img-width);
+    border-radius: 8px;
+}
+.chat-img video {
+    max-width: var(--chat-video-width);
+    border-radius: 8px;
+}
+/*#endregion chat-image*/
+
+/*#region chat-sticker*/
+.chat-sticker {
+    background-image: url('../img/line-brown-sticker.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    clear: both;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    display: inline-block;
+    height: 200px;
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 100px;
+    position: relative;
+    width: 200px;
+}
+.chat-sticker.chat-bot{
+    margin-left: 36px;
+}
+.chat-sticker.chat-user{
+    margin-right: 5px;
+}
+/*#endregion chat-sticker*/
+
+/*#region chat-template-buttons*/
+.chat-template-buttons {
+    background: white;
+    border-radius: 20px;
+    clear: both;
+    color: black;
+    display: inline-block;
+    padding: 0 0 20px 0;
+    position: relative;
+    width: var(--chat-template-buttons-width);
+    margin: 0 0 20px 10px;
+}
+.chat-template-buttons-image {
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    border-radius: 20px 20px 0 0;
+    height: var(--chat-template-buttons-image-height);
+    position: relative;
+}
+.chat-template-buttons-title {      
+    font-weight: bold;
+    padding: 5px 20px 5px 20px;  
+}
+.chat-template-buttons-text{     
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color:lightgray;
+    padding: 5px 20px 10px 20px;
+    word-break: break-all;
+}
+.chat-template-buttons-button {
+    color: var(--chat-template-highlight-color);
+    padding: 10px 0 0 0;
+    text-align: center;
+    word-break: break-all;
+}
+/*#endregion chat-template-buttons*/
+
+/*#region chat-template-confirm*/
+.chat-template-confirm {
+    clear: both;
+    display: inline-block;
+    padding: 0 0 20px 0;
+    position: relative;
+    width: var(--chat-template-confirm-width);
+}
+.chat-template-confirm-text {
+    background: rgb(250,250,250);
+    border-radius: 20px 20px 0 0;
+    color: black;
+    padding: 10px 20px;
+    width: 100%;
+}
+.chat-template-confirm-yes {
+    background: white;
+    border-radius: 0 0 0 20px;
+    color: var(--chat-template-highlight-color);
+    float: left;
+    padding: 20px 0 20px 0;
+    text-align: center;
+    width: 50%;
+}
+.chat-template-confirm-no {
+    background: white;
+    border-radius: 0 0 20px 0;
+    color: var(--chat-template-highlight-color);
+    float: left;
+    padding: 20px 0 20px 0;
+    text-align: center;
+    width: 50%;
+}
+/*#endregion chat-template-confirm*/
+
+/*#region chat-template-carousel*/
+.chat-icon-only {
+    clear: both;
+    display: block;
+    padding: 40px 0 0 0;
+    position: relative;
+    width: 100%;
+}
+.chat-template-carousel {
+    position: relative;
+    clear: both;
+    display: block;
+    overflow-x: scroll;   
+    white-space: nowrap;
+    width:100%;  
+}
+.chat-template-carousel::-webkit-scrollbar {
+    background: transparent;
+}
+/*#endregion chat-template-carousel*/
+
+/*#endregion simulator*/
+
+/*#region Chat box*/
+.chat-box {
+    background: var(--chat-highlight-color);
+    height: var(--chat-box-height);
+    padding: 10px;
+    width: var(--chat-width);
+}
+.chat-bar .chat-textarea {
+    background: rgb(74,86,110);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 20px;
+    overflow: auto;
+    padding-left:10px;
+    resize: none; 
+    width: calc(var(--chat-width) - 144px);
+}    
+.chat-bar .fa {
+    margin-left: 10px;
+}
+/*#endregion Chat box*/
+
+/*#region keyboard*/
+.chat-keyboard img{
+    position: relative;
+    width: var(--chat-width);
+    z-index: 10;
+}
+.chat-keyboard{
+    visibility: hidden;
+}
+.chat-keyboard.visible {
+    visibility: visible;
+}
+.chat-keyboard.visible img{
+    height: var(--chat-keyboard-height);
+}
+/*#endregion keyboard*/
+
+/*#region Settings area*/
+.settings{
+    background: gray;
+    color: black;
+    float: left;
+    height: 100%;
+    margin: 24px 0 24px 79px;
+    opacity: 0.98;
+    padding:24px;
+    position: absolute;
+    width: 90%;
+    z-index:30;
+}
+.settings h4{
+    color: white;
+}
+.settings input{
+    width:100%;
+}
+.settings .update{
+    padding-top: 24px;
+}
+.settings .warning{
+    color: white;
+    font-size: 21px;    
+}
+/*#endregion Settings area*/
+
+/*#region more menu*/
+.moreMenu{
+    border-color: lightgray;
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 10px;
+    bottom: 0;
+    color: white;
+    display: none;
+    float: left;
+    margin: 370px 0px 0px 10px;    
+    padding: 24px;
+    position: relative;
+    width: 500px;
+}
+.moreMenu input{
+    background-color: white;
+    color: black;
+    width: 100%;
+}
+/*#endregion more menu*/
+
+/*#region JSON for each chat item */
+.chat-raw {
+    display: none;
+    float: left;
+    margin: 24px;
+    position: relative;
+}
+.chat-raw pre{
+    background-color: rgb(52,57,62);
+    border-color: lightgray;
+    border-width: 4px;
+    border-style: solid; 
+    color:white;
+    font-size: 20px;
+    max-width: 700px;
+    overflow-y: hidden;
+    padding: 24px;    
+    width: auto;   
+    word-wrap: break-word;
+}
+.chat-raw i{
+    padding: 24px;
+    position: absolute;
+    right: 0;
+}
+/*#endregion JSON for each chat item */
