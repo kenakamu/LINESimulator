@@ -5,6 +5,7 @@ Are you getting tired using physical device for debug your LINE bot? Yes I am! T
 - LINE developer account
 - node.js
 - And of course your LINE bot app :)
+- This app only tested in Chrome
 ## Setup
 ```
 git clone https://github.com/kenakamu/LINESimulator
