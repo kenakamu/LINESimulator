@@ -1,5 +1,5 @@
 :root {
-    --chat-zoom: 1;
+    --chat-transform-scale: calc(414/1050);
     --chat-width: 414px;
     --chat-height: 736px;
     --chat-background: rgb(216,220,228);
@@ -248,6 +248,16 @@ body{
 }
 /*#endregion chat-sticker*/
 
+/*#region imagemap*/
+.chat-imagemap {
+    clear: both;
+    display: block; 
+    height: var(--chat-width);
+    position: relative;
+    transform: scale(var(--chat-transform-scale));
+    transform-origin: 0px 0px 0px;
+}
+/*#endregion imagemap*/
 /*#region chat-template-buttons*/
 .chat-template-buttons {
     background: white;
@@ -424,7 +434,7 @@ body{
     bottom: 0;
     color: white;
     float: left;
-    margin: 370px 0px 0px 10px;    
+    margin-top: 24px;    
     padding: 24px;
     position: relative;
     width: 500px;

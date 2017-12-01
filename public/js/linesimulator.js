@@ -55,7 +55,7 @@
     if (!userId || !channelToken || !channelToken || !botAPIAddress) {
       // Do nothing. Let settings pane open.
     }
-    else {      
+    else {
       setSettings();
     }
   }
@@ -110,7 +110,7 @@ function setSettings() {
         $('.warning')[0].innerText = "";
         toggleSettings();
       },
-      error: function (xhr, ajaxOptions, thrownError) {        
+      error: function (xhr, ajaxOptions, thrownError) {
         $('.warning')[0].innerText = `Error : ${JSON.parse(xhr.responseText).message}`;
       }
     });
@@ -263,7 +263,7 @@ function parseDataAndReturnListItem(data) {
           reply += `<div class="chat-template-buttons-button" onclick="{sendMessage('${action.text}');}">${action.text}</div>`;
         }
         else if (action.type == "uri") {
-          reply += `<div class="chat-template-buttons-button"><a href="${action.uri}">${action.label}</a></div>`;
+          reply += `<div class="chat-template-buttons-button"><a href="${action.uri}" target="_blank">${action.label}</a></div>`;
         }
       }
       reply += '</li>';
@@ -303,7 +303,7 @@ function parseDataAndReturnListItem(data) {
             reply += `<div class="chat-template-buttons-button" onclick="{sendMessage('${action.text}');}">${action.text}</div>`;
           }
           else if (action.type == "uri") {
-            reply += `<div class="chat-template-buttons-button"><a href="${action.uri}">${action.label}</a></div>`;
+            reply += `<div class="chat-template-buttons-button"><a href="${action.uri}" target="_blank">${action.label}</a></div>`;
           }
         }
         reply += `</div>`;
@@ -312,12 +312,28 @@ function parseDataAndReturnListItem(data) {
       reply += `</li>`;
     }
   }
+  else if (data.type == "imagemap") {
+    let imagemapId = Date.now();
+    var reply = `<li tabindex="1" class="chat-imagemap" onclick='displayRaw(${JSON.stringify(data)})'>
+    <img src="${data.baseUrl}/1040.png" alt="${data.altText}" usemap="#${imagemapId}"/><map name="${imagemapId}">`;
+
+    for (let i = 0; i < data.actions.length; i++) {
+      let action = data.actions[i];
+      if (action.type === "uri") {
+        reply += `<area shape="rect" coords="${action.area.x},${action.area.y},${action.area.width + action.area.x},${action.area.height}" href="${action.linkUri}" target="_blank">`;
+      }
+      else if (action.type === "message") {
+        reply += `<area shape="rect" coords="${action.area.x},${action.area.y},${action.area.width + action.area.x},${action.area.height}" href="javascript:sendMessage('${action.text}');">`;
+      }
+    }
+    reply += `</map></li>`;
+  }
   return reply;
 }
 
 function displayRaw(obj) {
   $('.chat-raw').children('pre')[0].innerText = JSON.stringify(obj, null, '\t');
-  if($('.chat-raw').hasClass("hide")){
+  if ($('.chat-raw').hasClass("hide")) {
     $('.chat-raw').removeClass("hide");
   }
 }
@@ -515,7 +531,7 @@ function toggleKeyboard() {
 
 var zoom = 1;
 function zoomin() {
- var rootStyle = window.getComputedStyle($(':root')[0]);
+  var rootStyle = window.getComputedStyle($(':root')[0]);
   zoom += 0.1;
   $('.simulator')[0].style.transform = `scale(${zoom})`;
 }
@@ -543,7 +559,7 @@ function toggleSettings() {
 }
 
 function closeChatRaw() {
-  if(!$('.chat-raw').hasClass("hide")){
+  if (!$('.chat-raw').hasClass("hide")) {
     $('.chat-raw').addClass("hide");
   }
 }
