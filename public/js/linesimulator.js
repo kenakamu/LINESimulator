@@ -317,8 +317,8 @@ function parseDataAndReturnListItem(data) {
 
 function displayRaw(obj) {
   $('.chat-raw').children('pre')[0].innerText = JSON.stringify(obj, null, '\t');
-  if($('.chat-raw')[0].hasClass("hide")){
-    $('.chat-raw')[0].removeClass("hide");
+  if($('.chat-raw').hasClass("hide")){
+    $('.chat-raw').removeClass("hide");
   }
 }
 
@@ -528,7 +528,7 @@ function toggleMoreMenu() {
     $('.moreMenu').removeClass("hide");
   }
   else {
-    $('.moreMenu')[0].addClass("hide");
+    $('.moreMenu').addClass("hide");
   }
 }
 

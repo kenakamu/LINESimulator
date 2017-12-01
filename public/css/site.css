@@ -421,7 +421,6 @@ body{
     border-width: 10px;
     bottom: 0;
     color: white;
-    display: none;
     float: left;
     margin: 370px 0px 0px 10px;    
     padding: 24px;
@@ -437,7 +436,6 @@ body{
 
 /*#region JSON for each chat item */
 .chat-raw {
-    display: none;
     float: left;
     margin: 24px;
     position: relative;
