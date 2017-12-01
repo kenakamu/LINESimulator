@@ -26,6 +26,10 @@ This app works as LINE client simnulator as well as LINE Platform simulator. All
 1. Simply click gear icon.
 1. Change settings and click connect.
 
+## zoom
+1. Click zoomin or zoomout in menu.<br/>![zoom.png](.\readme_img\zoom.png)
+1. Confirm the only simulator zoomin/out.
+
 ## Keyboard
 1. Click keyboard icon either in chatbar or in menu.<br/>![keyboard.png](.\readme_img\keyboard.png)
 1. You see keyboard is appearing in the chat. You cannot type via keyboard image but you see how it hides the window.<br/>![withkeyboard.png](.\readme_img\withkeyboard.png)
