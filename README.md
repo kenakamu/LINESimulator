@@ -55,4 +55,3 @@ At the moment, the simulator can:
 ## Feature to be added
 - URL actions
 - Rich menus
-- Rich image
