@@ -130,7 +130,7 @@ app.post('/send', function (req, res) {
         method: 'POST'
     },
         function (error, response, body) {
-            // handle result if necessary.
+            res.sendStatus(response.statusCode);
         }
     );
 });
