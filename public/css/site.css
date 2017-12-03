@@ -1,5 +1,5 @@
+/* If you want to change the size of simulator, adjust the value here. */
 :root {
-    --chat-transform-scale: calc(414/1050);
     --chat-width: 414px;
     --chat-height: 736px;
     --chat-background: rgb(216,220,228);
@@ -14,6 +14,7 @@
     --chat-template-buttons-image-height: 150px;
     --chat-template-highlight-color: rgb(87,118,165);
     --chat-template-confirm-width: 300px;
+    --chat-transform-scale: calc(414/1050); /* This is for imagemap.*/
 }
 body{
     background: rgb(52,57,62);
