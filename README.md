@@ -86,6 +86,7 @@ At the moment, the simulator can:
 ## Change the simulator size
 At the moment, you need to manually change the size. Just simply modify the value of css variables in public/css/site.css.
 ## Feature to be added
+- Datetime Picker
 - URL actions
 - Rich menus
 - Simulator choice such as iPhone X/iPhone 8/Xperia XZ1 etc.
