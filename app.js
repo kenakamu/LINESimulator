@@ -29,26 +29,26 @@ app.post('/channelSettings', function (req, res) {
     channelSecret = req.body.channelSecret;
     channelToken = req.body.channelToken;
     request({
-        headers: {"Authorization": "Bearer " + channelToken},
+        headers: { "Authorization": "Bearer " + channelToken },
         uri: `${lineAPIUrl}bot/profile/${req.body.userId}`,
         method: "GET"
     },
         function (error, response, body) {
-            if(body.indexOf("userId") == -1){
+            if (body.indexOf("userId") == -1) {
                 res.status(response.statusCode).send(body);
             }
-            else{
+            else {
                 return res.send(body);
             }
         }
-    );    
+    );
 });
 
 // Receive file from client and send appropriate event to API.
 app.post('/upload', function (req, res) {
     // Generate contentId by using time and copy the file into upload folder.
     var contentId = Date.now();
-    if(!fs.existsSync(`${__dirname}\\public\\temp`)){
+    if (!fs.existsSync(`${__dirname}\\public\\temp`)) {
         fs.mkdirSync(`${__dirname}\\public\\temp`);
     }
     if (!fs.existsSync(`${__dirname}\\public\\temp\\${contentId}`)) {
@@ -112,7 +112,7 @@ app.post('/upload', function (req, res) {
     res.send({ "filePath": filePath, "sendObject": sendObject });
 });
 
-/* send request */
+/* send request to your bot application */
 app.post('/send', function (req, res) {
     var jsonData = JSON.stringify(req.body);
     // Generate hash based on https://developers.line.me/en/docs/messaging-api/reference/#signature-validation
@@ -122,7 +122,8 @@ app.post('/send', function (req, res) {
 
     request({
         headers: {
-            "X-Line-Signature": signature
+            "X-Line-Signature": signature,
+            "Content-Type": "application/json"
         },
         uri: botAPIAddress,
         body: jsonData,
@@ -134,87 +135,44 @@ app.post('/send', function (req, res) {
     );
 });
 
-
 //#region Behave as LINE Platform
 const lineAPIUrl = "https://api.line.me/v2/";
 
-// Issue channel access token
-// https://developers.line.me/en/docs/messaging-api/reference/#issue-channel-access-token
-app.post('/oauth/accessToken', function (req, res) {
-    // Return 
-    request({
-        headers: req.headers,
-        uri: `${lineAPIUrl}/oauth/accessToken`,
-        method: 'POST',
-        body: req.body
-    },
-        function (error, response, body) {
-            res.send(body);
-        }
-    );
-});
-
-// Revoke channel access token
-// https://developers.line.me/en/docs/messaging-api/reference/#revoke-channel-access-token
-app.post('/oauth/revoke', function (req, res) {
-    // Do nothing. just return 200.
-    request({
-        headers: req.headers,
-        uri: `${lineAPIUrl}/oauth/revoke`,
-        method: 'POST',
-        body: req.body
-    },
-        function (error, response, body) {
-            res.send(body);
-        }
-    );
-});
-
-// Send reply message
-// https://developers.line.me/en/docs/messaging-api/reference/#send-reply-message
-app.post('/bot/message/reply', function (req, res) {
-    // Once received reply from API, simply pass it to client via socket and return success.
-    io.emit('reply', req.body);
-    res.sendStatus(200);
-});
-
-// Send push message
-// https://developers.line.me/en/docs/messaging-api/reference/#send-push-message
-app.post('/bot/message/push', function (req, res) {
-    // Once received push from API, simply pass it to client by socket and return success.
-    io.emit('reply', req.body);
-    res.sendStatus(200);
-});
-
-// Send multicast messages
-// https://developers.line.me/en/docs/messaging-api/reference/#send-multicast-messages
-app.post('/bot/message/multicast', function (req, res) {
-    // Once received multicast from API, simply pass it to client by socket and return success.
-    io.emit('reply', req.body);
-    res.sendStatus(200);
-});
-
-// Get content
-// https://developers.line.me/en/docs/messaging-api/reference/#get-content
-app.get('/bot/message/:messageId/content', function (req, res) {
-    // The actual file sit in public\temp. Returns the file.
-    var files = fs.readdirSync(`${__dirname}\\public\\temp\\${req.params.messageId}`);
-    res.sendFile(`${__dirname}\\public\\temp\\${req.params.messageId}\\${files[0]}`);
-});
-
-// Redirect to LINE Platform if not handling in the app.
-app.all('/bot/*', function (req, res) {
-    // Redirect request to LINE Platform, then return the result.
-    handleRequest(req, res);
+// Receive request from your bot application.
+app.all('/*', function (req, res) {
+    var url = req.url;
+    // reply, push and multicast will be simply pass to UI.
+    if (url.indexOf('reply') > -1 || url.indexOf('push') > -1 || url.indexOf('multicast') > -1) {
+        io.emit('reply', req.body);
+        res.sendStatus(200);
+    }
+    // if it request content
+    else if (url.indexOf('content') > -1) {
+        // The actual file sit in public\temp. Returns the file with messageId
+        let messageId = url.slice(url.indexOf('message') + 8, url.indexOf('content') - 1);
+        var files = fs.readdirSync(`${__dirname}\\public\\temp\\${messageId}`);
+        res.sendFile(`${__dirname}\\public\\temp\\${messageId}\\${files[0]}`);
+    }    
+    else {
+        handleRequest(req, res);
+    }
 });
 
 // Handle all request by add LINE Platform Url.
 function handleRequest(req, res) {
     // remove host header
     delete req.headers['host'];
+    // Craft URL for LINE Platform.
+    var url = req.url;
+    if(url.indexOf('oauth') > -1 ){
+        url = url.slice(url.indexOf('oauth'),url.length );
+    }
+    else if(url.indexOf('bot') > -1){
+        url = url.slice(url.indexOf('bot'), url.length);
+    }
     request({
         headers: req.headers,
-        uri: `${lineAPIUrl}${req.url}`,
+        uri: `${lineAPIUrl}${url}`,
         method: req.method
     },
         function (error, response, body) {
