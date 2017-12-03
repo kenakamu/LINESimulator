@@ -19,29 +19,29 @@ This app works as LINE client simnulator as well as LINE Platform simulator. All
 ## How to use
 1. Follow the setup to run the simulator. By default it uses port 8080. If you dont' like it, change it in the source code.
 1. In your bot app, specify http://localhost:8080 as your LINE URL.
-1. In the simulator, enter your Bot API URL, user id, channel secret and token, then click "connect".<br/>![settings.png](.\readme_img\settings.png)
-1. In the chat bar, enter any text and hit "Enter" or click send icon.<br/>![chatbar.png](.\readme_img\chatbar.png)
-1. Depending on your implementaion, you can see reply.<br/>![chatreply.png](.\readme_img\chatreply.png)
+1. In the simulator, enter your Bot API URL, user id, channel secret and token, then click "connect".<br/>![settings.png](readme_img/settings.PNG)
+1. In the chat bar, enter any text and hit "Enter" or click send icon.<br/>![chatbar.png](readme_img/chatbar.PNG)
+1. Depending on your implementaion, you can see reply.<br/>![chatreply.png](readme_img/chatreply.PNG)
 
 ## Update settings
 1. Simply click gear icon.
 1. Change settings and click connect.
 
 ## zoom
-1. Click zoomin or zoomout in menu.<br/>![zoom.png](.\readme_img\zoom.png)
+1. Click zoomin or zoomout in menu.<br/>![zoom.png](readme_img/zoom.PNG)
 1. Confirm the only simulator zoomin/out.
 
 ## Keyboard
-1. Click keyboard icon either in chatbar or in menu.<br/>![keyboard.png](.\readme_img\keyboard.png)
-1. You see keyboard is appearing in the chat. You cannot type via keyboard image but you see how it hides the window.<br/>![withkeyboard.png](.\readme_img\withkeyboard.png)
+1. Click keyboard icon either in chatbar or in menu.<br/>![keyboard.png](readme_img/keyboard.PNG)
+1. You see keyboard is appearing in the chat. You cannot type via keyboard image but you see how it hides the window.<br/>![withkeyboard.png](readme_img/withkeyboard.PNG)
 
 ## Send non-text
-1. Click "Right arrow" icon either in chatbar or in menu.<br/>![keyboard.png](.\readme_img\keyboard.png)
-1. Use the more menu area to send any non-text data.<br/>![moremenu.png](.\readme_img\moremenu.png)
+1. Click "Right arrow" icon either in chatbar or in menu.<br/>![keyboard.png](readme_img/keyboard.PNG)
+1. Use the more menu area to send any non-text data.<br/>![moremenu.png](readme_img/moremenu.PNG)
 
 ## See the JSON object
 1. Select any sent or replied area.
-1. You see JSON object.<br/>![confirmjson.png](.\readme_img\confirmjson.png)
+1. You see JSON object.<br/>![confirmjson.png](readme_img/confirmjson.PNG)
 1. Click close icon to close it.
 
 # Features
