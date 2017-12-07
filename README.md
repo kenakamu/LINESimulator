@@ -1,4 +1,6 @@
 # LINE Simulator for BOT developer
+日本語は[こちら](./README_ja.md)
+
 Are you getting tired using physical device for debug your LINE bot? Yes I am! This project contains simulator to boost your developer productivity.
 
 ## Prerequisits
@@ -67,7 +69,7 @@ You can simulate how keyboard hides the chat window.
 1. You see keyboard is appearing in the chat. You cannot type via keyboard as this is just an image.<br/>![withkeyboard.png](readme_img/withkeyboard.PNG)
 
 ## Send non-text
-1. Click "Right arrow" icon either in chatbar or in menu.<br/>![keyboard.png](readme_img/keyboard.PNG)
+1. Click "Right arrow" icon either in chatbar or in menu.<br/>![more.png](readme_img/more.PNG)
 1. Use the more menu area to send any non-text data. You can send image, sticker, location or system messages. <br/>![moremenu.png](readme_img/moremenu.PNG)
 
 ## See the JSON object
