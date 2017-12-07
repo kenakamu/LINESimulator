@@ -9,12 +9,24 @@ Are you getting tired using physical device for debug your LINE bot? Yes I am! T
 - And of course your LINE bot app :)
 - **This app is only tested in Chrome**
 ## Simulator setup
+Use following commands to clone and install module. Then for Windows run npm start.
 ```
 git clone https://github.com/kenakamu/LINESimulator
 npm install
 npm start
 ```
-If you are using MacOS, open a browser and connect to http://localhost:8080. 
+
+for MacOS, replace the last command as:
+```
+npm startMac
+```
+
+for Linux, replace the last command as: 
+```
+npm startLinux
+```
+
+If you prefer using different browser, then open it and manully connect to http://localhost:8080
 
 # How this works
 This app works as LINE client simnulator, as well as LINE Platform simulator. All the request from your bot application shall come to this simulator, and it will redirect to LINE platform if necessary, otherwise it just returns the message to simulator UI.

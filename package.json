@@ -12,6 +12,8 @@
 		"socket.io": "^2.0.4"
 	},
 	"scripts": {
-		"start": "start http://localhost:8080 && node app.js"		
+		"start": "start http://localhost:8080 && node app.js",
+		"startMac": "open http://localhost:8080 && node app.js",	
+		"startLinux": "xdg-open http://localhost:8080 && node app.js"
 	}
 }
