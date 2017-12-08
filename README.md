@@ -59,7 +59,7 @@ const line = require('@line/bot-sdk');
 
 ## How to use the simulator.
 1. Open Chrome and connect to http://localhost:8080
-1. You will see the connection page. Enter your Bot API URL, user id, channel secret and token, then click "connect".<br/>![settings.png](readme_img/settings.PNG)
+1. You will see the connection page. Enter your Bot API URL, user id, channel secret and token, then click "connect". You can get UserId, ChannelSecret and ChannelToke from [LINE Developer Portal](https://developers.line.me/console/) <br/>![settings.png](readme_img/settings.PNG)
 1. In the chat bar, enter any text and hit "Enter" or click send icon.<br/>![chatbar.png](readme_img/chatbar.PNG)
 1. Depending on your implementaion, you can see reply.<br/>![chatreply.png](readme_img/chatreply.PNG)
 

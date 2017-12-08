@@ -57,7 +57,7 @@ const line = require('@line/bot-sdk');
 
 ## 使い方
 1. Chrome を開いて http://localhost:8080 に接続。
-1. 接続ページが出るので、必要な値を入力して、"connect" をクリック。<br/>![settings.png](readme_img/settings.PNG)
+1. 接続ページが出るので、必要な値を入力して、"connect" をクリック。UserId, ChannelSecret, ChannelToken は [LINE 開発者ポータル](https://developers.line.me/console/) から取得可能。<br/>![settings.png](readme_img/settings.PNG)
 1. チャットバーにメッセージを入れて、Enter キー押下または送信アイコンをクリック。<br/>![chatbar.png](readme_img/chatbar.PNG)
 1. 返信を確認。<br/>![chatreply.png](readme_img/chatreply.PNG)
 
