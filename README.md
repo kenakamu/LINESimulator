@@ -3,6 +3,15 @@
 
 Are you getting tired using physical device for debug your LINE bot? Yes I am! This project contains simulator to boost your developer productivity.
 
+## Install from npm
+If you just want to use it, install and run from npm.
+```
+npm install -g line-simulator
+line-simulator
+```
+It will open a browser and start the service on port 8080. I recommend using Chrome as browser.
+When you stop it, Ctrl+C from the terminal.
+
 ## Prerequisits
 - LINE developer account
 - node.js

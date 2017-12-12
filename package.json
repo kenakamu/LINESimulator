@@ -1,6 +1,6 @@
 {
 	"name": "line-simulator",
-	"version": "0.0.1",
+	"version": "0.0.3",
 	"displayName": "LINE Simulator for Bot developer",
 	"description": "LINE Simulator for Bot developer",
 	"publisher": "kenakamu",
@@ -32,5 +32,6 @@
 	},
 	"bugs": {
 		"url": "https://github.com/kenakamu/LINESimulator/issues"
-	}
+	},
+	"license": "MIT"
 }
