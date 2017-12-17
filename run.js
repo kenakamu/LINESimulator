@@ -1,5 +1,7 @@
 #! node
 // Run the simualtor from command prompt.
+// This is for npm package.
+
 var shell = require("shelljs");
 var os = require('os');
 

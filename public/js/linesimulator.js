@@ -1,6 +1,23 @@
 (function () {
 
-  /* real-time chat windows update handler*/
+  // Load settings at startup
+  function loadSettings() {
+    userId = localStorage.getItem('userId');
+    let channelSecret = localStorage.getItem('channelSecret');
+    let channelToken = localStorage.getItem('channelToken');
+    let botAPIAddress = localStorage.getItem('botAPIAddress');
+    $("#userId")[0].value = userId;
+    $("#channelSecret")[0].value = channelSecret;
+    $("#channelToken")[0].value = channelToken;
+    $("#botAPIAddress")[0].value = botAPIAddress;
+    if (!userId || !channelToken || !channelToken || !botAPIAddress) {
+      // Do nothing. Let settings pane open.
+    }
+    else {
+      setSettings();
+    }
+  }
+  
   // Add chat item when events are received from Bot API.
   function receiveMessages(data) {
     for (i = 0; i < data.messages.length; i++) {
@@ -30,6 +47,7 @@
       selection.addRange(range);
     }
   }
+
   // Disable Ctrl+A so that it only works in JSON raw.
   function disableCtrlA(e) {
     let code = (e.keyCode ? e.keyCode : e.which);
@@ -37,48 +55,31 @@
       return false;
     }
   }
+
   // Update time
   function updateTime() {
     var current = new Date();
     $('.time').each(function (index, value) { this.innerText = current.getHours() + ":" + current.getMinutes(); });
   }
 
-  function loadSettings() {
-    userId = localStorage.getItem('userId');
-    let channelSecret = localStorage.getItem('channelSecret');
-    let channelToken = localStorage.getItem('channelToken');
-    let botAPIAddress = localStorage.getItem('botAPIAddress');
-    $("#userId")[0].value = userId;
-    $("#channelSecret")[0].value = channelSecret;
-    $("#channelToken")[0].value = channelToken;
-    $("#botAPIAddress")[0].value = botAPIAddress;
-    if (!userId || !channelToken || !channelToken || !botAPIAddress) {
-      // Do nothing. Let settings pane open.
-    }
-    else {
-      setSettings();
-    }
-  }
   // Craete sockect for bi-directional real-time communication.
   var socket = io();
   socket.on('reply', function (data) {
     receiveMessages(data);
   });
 
+  // Update time every minutes,
   setInterval(updateTime, 60000);
   updateTime();
   loadSettings();
   // Setup key pressdown event.
   $('#message-to-send').bind("keypress", {}, sendByEnter);
   $('.chat-raw').bind("keydown", {}, selectRaw);
-  // Disable select in body so that only chat-raw pre is selectable.
-  // $(document).attr('unselectable', 'on')
-  //   .css('user-select', 'none')
-  //   .on('selectstart', false);
   $(document).bind("keydown", {}, disableCtrlA);
 }());
 
 //#region settings
+
 var userId = "";
 function setSettings() {
   let userIdInput = $("#userId")[0];
@@ -116,7 +117,6 @@ function setSettings() {
     });
   }
 }
-
 
 //#endregion
 
@@ -168,6 +168,9 @@ function appendMediaToThread(data) {
   }
   else if (fileext === "png" || fileext === "jpeg" || fileext === "jpg") {
     appendImageToThread(data.filePath, data.sendObject);
+  }
+  else if (fileext === "m4a") {
+    appendAudioToThread(data.filePath, data.sendObject);
   }
   else {
     return;
@@ -238,6 +241,18 @@ function parseDataAndReturnListItem(data) {
                   <source src="${data.originalContentUrl}" type="video/mp4>
                 </video>
           </li>`
+  }
+  else if (data.type == "audio") {
+    let audioId = Date.now();
+    let audioLength = data.duration;
+    let minutes = Math.floor(audioLength / 60000);
+    let seconds = ((audioLength % 60000) / 1000).toFixed(0);
+    var reply = `<li tabindex="1" class="chat-bot chat-audio" onclick='displayRaw(${JSON.stringify(data)})'>
+        <i class="fa fa-play-circle fa-lg" onclick="play('#${audioId}');"></i> ${minutes + ":" + (seconds < 10 ? '0' : '') + seconds}　　-----------
+        <audio id="${audioId}">
+            <source src="${data.originalContentUrl}">
+        </audio>
+    </li>`
   }
   else if (data.type == "template") {
     if (data.template.type == "buttons") {
@@ -373,12 +388,27 @@ function appendVideoToThread(path, sendObject) {
   $('li').last().addClass('active-li').focus();
   $('#message-to-send')[0].focus();
 }
+// Append Audio message as user.
+function appendAudioToThread(path, sendObject) {
+  let chatThread = $(".chat-thread ul");
+  let audioId = Date.now();
+  chatThread.append(`<li tabindex="1" class="chat-user chat-audio" onclick='displayRaw(${JSON.stringify(sendObject)});'>
+      <i class="fa fa-play-circle fa-lg" onclick="play('#${audioId}');"></i> 11:11　　-----------
+      <audio id="${audioId}" src="${path}"><audio>
+    </li>`);
+  $('li').last().addClass('active-li').focus();
+  $('#message-to-send')[0].focus();
+}
 // Append bot reply to list and set focus on last item to auto scroll.
 function appendBotReplyToThread(data) {
   let chatThread = $(".chat-thread ul");
   chatThread.append(data);
   $('li').last().addClass('active-li').focus();
   $('#message-to-send')[0].focus();
+}
+// Play audio for chat-audio
+function play(element){
+  $(element)[0].play();
 }
 
 /* Send data to API */
