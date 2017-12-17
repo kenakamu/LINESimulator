@@ -219,7 +219,7 @@ function sendAddress() {
       "longitude": $('#longitude')[0].value
     }
   };
-
+  appendLocationToThread(sendObject);
   send(sendObject);
 }
 
@@ -234,6 +234,18 @@ function parseDataAndReturnListItem(data) {
   }
   else if (data.type == "image") {
     var reply = `<li tabindex="1" class="chat-bot chat-img" onclick='displayRaw(${JSON.stringify(data)})'><img src="${data.previewImageUrl}"/></li>`;
+  }
+  else if (data.type == "location") {
+    var reply = `<li tabindex="1" class="chat-bot chat-location" onclick='displayRaw(${JSON.stringify(data)})'>
+            <div>
+                <i class="fa fa-flag"></i>
+            </div>
+            <div>
+              ${data.title}
+              <br/>
+              ${data.address}
+            </div>
+        </li>`;
   }
   else if (data.type == "video") {
     var reply = `<li tabindex="1" class="chat-bot chat-img" onclick='displayRaw(${JSON.stringify(data)})'>
@@ -365,6 +377,22 @@ function appendTextMessageToThread(text, sendObject) {
 function appendStickerMessageToThread(stickerId, sendObject) {
   let chatThread = $(".chat-thread ul");
   chatThread.append(`<li tabindex="1" class="chat-user chat-sticker" onclick='displayRaw(${JSON.stringify(sendObject)});'>stickerId:<br/>${stickerId}</li>`);
+  $('li').last().addClass('active-li').focus();
+  $('#message-to-send')[0].focus();
+}
+// Append location message as user.
+function appendLocationToThread(sendObject) {
+  let chatThread = $(".chat-thread ul");
+  chatThread.append(`<li tabindex="1" class="chat-user chat-location" onclick='displayRaw(${JSON.stringify(sendObject)});'>
+      <div>
+        <i class="fa fa-flag"></i>
+      </div>
+      <div>
+      ${sendObject.message.title}
+      <br/>
+      ${sendObject.message.address}
+      </div>
+    </li>`);
   $('li').last().addClass('active-li').focus();
   $('#message-to-send')[0].focus();
 }
