@@ -10,6 +10,7 @@ var crypto = require('crypto');
 var botAPIAddress;
 var channelSecret;
 var channelToken;
+var pocMode;
 
 // Specifie body parsers
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,6 +43,12 @@ app.post('/channelSettings', function (req, res) {
             }
         }
     );
+});
+
+// Set pocMode.
+app.post('/pocMode', function (req, res) {
+    pocMode = req.body.pocMode;
+    return res.sendStatus(200);
 });
 
 // Receive file from client and send appropriate event to API.
@@ -90,25 +97,26 @@ app.post('/upload', function (req, res) {
         }
     };
 
-    var jsonData = JSON.stringify({ "events": [sendObject] });
-    var signature = crypto.createHmac("SHA256", channelSecret)
-        .update(jsonData)
-        .digest().toString('base64');
+    if (pocMode === "false") {
+        var jsonData = JSON.stringify({ "events": [sendObject] });
+        var signature = crypto.createHmac("SHA256", channelSecret)
+            .update(jsonData)
+            .digest().toString('base64');
 
-    // Send request.
-    request({
-        headers: {
-            "X-Line-Signature": signature
+        // Send request.
+        request({
+            headers: {
+                "X-Line-Signature": signature
+            },
+            uri: botAPIAddress,
+            body: jsonData,
+            method: 'POST'
         },
-        uri: botAPIAddress,
-        body: jsonData,
-        method: 'POST'
-    },
-        function (error, response, body) {
-            // handle result if necessary.
-        }
-    );
-
+            function (error, response, body) {
+                // handle result if necessary.
+            }
+        );
+    }
     res.send({ "filePath": filePath, "sendObject": sendObject });
 });
 
@@ -152,7 +160,7 @@ app.all('/*', function (req, res) {
         let messageId = url.slice(url.indexOf('message') + 8, url.indexOf('content') - 1);
         var files = fs.readdirSync(`${__dirname}\\public\\temp\\${messageId}`);
         res.sendFile(`${__dirname}\\public\\temp\\${messageId}\\${files[0]}`);
-    }    
+    }
     else {
         handleRequest(req, res);
     }
@@ -164,10 +172,10 @@ function handleRequest(req, res) {
     delete req.headers['host'];
     // Craft URL for LINE Platform.
     var url = req.url;
-    if(url.indexOf('oauth') > -1 ){
-        url = url.slice(url.indexOf('oauth'),url.length );
+    if (url.indexOf('oauth') > -1) {
+        url = url.slice(url.indexOf('oauth'), url.length);
     }
-    else if(url.indexOf('bot') > -1){
+    else if (url.indexOf('bot') > -1) {
         url = url.slice(url.indexOf('bot'), url.length);
     }
     request({

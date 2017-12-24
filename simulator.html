@@ -21,6 +21,11 @@
                 </i>
             </div>
             <div>
+                <i class="fa fa-refresh fa-inverse fa-3x" onclick=refresh();>
+                    <span>clear the chat item</span>
+                </i>
+            </div>
+            <div>
                 <i class="fa fa-gear fa-inverse fa-3x" onclick=toggleSettings();>
                     <span>change settings such as user id, server address.</span>
                 </i>
@@ -35,11 +40,17 @@
                     <span>Send non-text messages.</span>
                 </i>
             </div>
-            <!-- <div>
-                <i class="fa fa-plus-square fa-inverse fa-3x" onclick="addSimulator();">
-                    <span>Add additional emulator</span>
+            <div>
+                <i class="fa fa-download fa-inverse fa-3x" onclick="saveChat();">
+                    <span>Save Chat Data</span>
                 </i>
-            </div> -->
+            </div>
+            <div>
+                <i class="fa fa-upload fa-inverse fa-3x" onclick="openFileDialogForLoadJson();">
+                    <span>Load Chat Data</span>
+                </i>
+                <input type=file id="loadJsonFile" style="display:none" />
+            </div>
         </div>
         <!-- LINE client simulator -->
         <div class="simulator">
@@ -81,6 +92,10 @@
                     <!-- <ul class="chat-body"> -->
                     <ul>
                         <li class="chat-top-space"></li>
+                        <li tabindex="1" data='{"type":"text","text":"tset"}' class="chat-bot chat-text active-li" onclick="onSelectChatItem($(this))">test1</li>
+                        <li tabindex="1" data='{"type":"text","text":"tset"}' class="chat-bot chat-text active-li" onclick="onSelectChatItem($(this))">test2</li>
+                        <li tabindex="1" data='{"type":"text","text":"tset"}' class="chat-bot chat-text active-li" onclick="onSelectChatItem($(this))">test3</li>
+                        
                     </ul>
                 </div>
                 <div class="chat-box">
@@ -104,9 +119,10 @@
                 <!-- end chat-message -->
             </div>
         </div>
-
         <!-- Send media, location, sticker, etc.  -->
         <div class="moreMenu hide">
+            <h4>Send media, location, system event, etc</h4>
+            <hr>
             <div class="row">
                 <h4>Send file</h4>
                 <div class="col-md-10">
@@ -176,6 +192,7 @@
                 <a class="col-md-2 btn btn-sm btn-success" onclick="sendBeacon()">Send</a>
             </div>
         </div>
+        <!-- Seeting area  -->
         <div class="settings">
             <h4>You can get UserId, channelSecret and channelToken from
                 <a style="color:white" href="https://developers.line.me/console/" target="_blank">LINE Developer Console</a>
@@ -206,14 +223,476 @@
             </div>
             <div class="update">
                 <a class="col-md-2 btn btn-success" onclick="setSettings()">CONNECT</a>
+                <a class="col-md-2 col-md-offset-1 btn btn-primary" onclick="setPocMode(true)">POC Mode</a>
                 <div class="col-md-12 warning"></div>
             </div>
         </div>
-        <!-- Raw Data -->
+        <!-- JSON Raw Data -->
         <div class="chat-raw hide" tabindex="0">
             <i class="fa fa-window-close fa-inverse fa-2x" onclick="closeChatRaw();"></i>
             <pre id="rawdata">               
             </pre>
+        </div>
+        <!-- Poc Send from Bot -->
+        <div class="bot-chat hide">
+            <h4>[Send message as bot. POC only]</h4>
+            <!-- menus -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#text" aria-controls="home" role="tab" data-toggle="tab">Text</a>
+                </li>
+                <li role="presentation">
+                    <a href="#media" aria-controls="profile" role="tab" data-toggle="tab">Media</a>
+                </li>
+                <li role="presentation">
+                    <a href="#sticker" aria-controls="messages" role="tab" data-toggle="tab">Sticker</a>
+                </li>
+                <li role="presentation">
+                    <a href="#location" aria-controls="messages" role="tab" data-toggle="tab">Location</a>
+                </li>
+                <li role="presentation">
+                    <a href="#confirm" aria-controls="settings" role="tab" data-toggle="tab">Confirm</a>
+                </li>
+                <li role="presentation">
+                    <a href="#buttons" aria-controls="settings" role="tab" data-toggle="tab">Buttons</a>
+                </li>
+                <li role="presentation">
+                    <a href="#carousel" aria-controls="settings" role="tab" data-toggle="tab">Carousel</a>
+                </li>
+                <li role="presentation">
+                    <a href="#imagecarousel" aria-controls="settings" role="tab" data-toggle="tab">Image Carousel</a>
+                </li>
+            </ul>
+            <!-- content -->
+            <div class="bot-chat-body tab-content">
+                <!-- Send Text -->
+                <div role="tabpanel" class="tab-pane active bot-chat-box" id="text">
+                    <div>
+                        <span>
+                            <input type="text" class="chat-textarea" id="message-from-bot" placeholder="Enter a message"></input>
+                        </span>
+                        <a onclick="sendTextFromBot()">
+                            <i class="fa fa-paper-plane fa-inverse"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Send Media -->
+                <div role="tabpanel" class="tab-pane bot-chat-box" id="media">
+                    <div class="col-md-10">
+                        <input type=file id="filename-from-bot" directory />
+                    </div>
+                    <a class="col-md-2 btn btn-sm btn-success" onclick="uploadFileFromBot()">Upload</a>
+                </div>
+                <!-- Send Sticker -->
+                <div role="tabpanel" class="tab-pane bot-chat-box" id="sticker">
+                    <div class="col-md-10">
+                        <div class="col-md-3 row">PackageId: </div>
+                        <div class="col-md-9">
+                            <input type=text placeholder="PackageId" id="packageId-from-bot" value="" />
+                        </div>
+                        <div class="col-md-3 row">StickerId: </div>
+                        <div class="col-md-9">
+                            <input type=text placeholder="StickerId" id="stickerId-from-bot" value="" />
+                        </div>
+                    </div>
+                    <a class="col-md-2 btn btn-sm btn-success" onclick="sendStickerFromBot()">Send</a>
+                </div>
+                <!-- Send Sticker -->
+                <div role="tabpanel" class="tab-pane bot-chat-box" id="location">
+                    <div class="col-md-10">
+                        <div class="col-md-3 row">Title: </div>
+                        <div class="col-md-9">
+                            <input type=text placeholder="Title" id="title-from-bot" value="" />
+                        </div>
+                        <div class="col-md-3 row">Address: </div>
+                        <div class="col-md-9">
+                            <input type=text placeholder="Address" id="address-from-bot" value="" />
+                        </div>
+                        <div class="col-md-3 row">Latitude: </div>
+                        <div class="col-md-9">
+                            <input type=text placeholder="Latitude" id="latitude-from-bot" value="" />
+                        </div>
+                        <div class="col-md-3 row">Longitude: </div>
+                        <div class="col-md-9">
+                            <input type=text placeholder="Longitude" id="longitude-from-bot" value="" />
+                        </div>
+                    </div>
+                    <a class="col-md-2 btn btn-sm  btn-success" onclick="sendAddressFromBot()">Send</a>
+                </div>
+                <!-- Send Confirm -->
+                <div role="tabpanel" class="tab-pane bot-chat-box" id="confirm">
+                    <div>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2">Confirm Title</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="confirm-title" placeholder="Enter Title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2">Text for Yes</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="confirm-yes" placeholder="Enter Yes Text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2">Text for No</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="confirm-no" placeholder="Enter No Text">
+                                </div>
+                            </div>
+                        </form>
+                        <div>
+                            <a class="btn btn-sm btn-success" onclick="sendConfirmFromBot()">Send</a>
+                        </div>
+                        <hr>
+                        <div class="chat-bot chat-template chat-template-confirm">
+                            <div class="chat-template-confirm-text" id="preview-confirm-title">Title</div>
+                            <div class="chat-template-confirm-yes" id="preview-confirm-yes">Yes</div>
+                            <div class="chat-template-confirm-no" id="preview-confirm-no">No</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Send Buttons -->
+                <div role="tabpanel" class="tab-pane bot-chat-box" id="buttons">
+                    <div>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2">Buttons Image</label>
+                                <div class="col-sm-8">
+                                    <input type=file id="buttons-image" directory />
+                                </div>
+                                <a class="col-sm-2 btn btn-sm btn-success" onclick="removePreviewImage('buttons-image')">Remove</a>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">Buttons Title</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="buttons-title" placeholder="Enter Title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2">Buttons Text</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="buttons-text" placeholder="Enter Text">
+                                </div>
+                            </div>
+                            <div class="form-group buttons-actions">
+                                <label class="col-sm-4">Actions 1 Label</label>
+                                <label class="col-sm-4">Actions 1 Data</label>
+                                <label class="col-sm-4">Actions 1 Type</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="buttons-action-1" placeholder="text">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="buttons-action-1-data" placeholder="data">
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="buttons-action-1-type" data-toggle="dropdown">
+                                            message
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#">message</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">postback</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">uri</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group buttons-actions">
+                                <label class="col-sm-4">Actions 2 Label</label>
+                                <label class="col-sm-4">Actions 2 Data</label>
+                                <label class="col-sm-4">Actions 2 Type</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="buttons-action-2" placeholder="text">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="buttons-action-2-data" placeholder="data">
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="buttons-action-2-type" data-toggle="dropdown">
+                                            message
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#">message</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">postback</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">uri</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group buttons-actions">
+                                <label class="col-sm-4">Actions 3 Label</label>
+                                <label class="col-sm-4">Actions 3 Data</label>
+                                <label class="col-sm-4">Actions 3 Type</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="buttons-action-3" placeholder="text">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="buttons-action-3-data" placeholder="data">
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="buttons-action-3-type" data-toggle="dropdown">
+                                            message
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#">message</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">postback</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">uri</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group buttons-actions">
+                                <label class="col-sm-4">Actions 4 Label</label>
+                                <label class="col-sm-4">Actions 4 Data</label>
+                                <label class="col-sm-4">Actions 4 Type</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="buttons-action-4" placeholder="text">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="buttons-action-4-data" placeholder="data">
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="buttons-action-4-type" data-toggle="dropdown">
+                                            message
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#">message</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">postback</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">uri</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div>
+                            <a class="btn btn-sm btn-success" onclick="sendButtonsFromBot()">Send</a>
+                        </div>
+                        <hr>
+                        <div class="chat-bot chat-template chat-template-buttons">
+                            <div class="chat-template-buttons-image hide" id="preview-buttons-image"></div>
+                            <div class="chat-template-buttons-title hide" id="preview-buttons-title">Button Title</div>
+                            <div class="chat-template-buttons-text" id="preview-buttons-text">Button Text</div>
+                            <div class="chat-template-buttons-button" id="preview-buttons-action-1">action</div>
+                            <div class="chat-template-buttons-button hide" id="preview-buttons-action-2"></div>
+                            <div class="chat-template-buttons-button hide" id="preview-buttons-action-3"></div>
+                            <div class="chat-template-buttons-button hide" id="preview-buttons-action-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Send Carousel -->
+                <div role="tabpanel" class="tab-pane bot-chat-box" id="carousel">
+                    <div>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <i class="fa fa-plus-square fa-inverse fa-2x" onclick="addColumn();"></i>
+                                <label>Add new column</label>
+                                <i class="fa fa-minus-square fa-inverse fa-2x" onclick="removeColumn();"></i>
+                                <label>Delete selected</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2">Carousel Image</label>
+                                <div class="col-sm-8">
+                                    <input type=file id="carousel-image" directory />
+                                </div>
+                                <a class="col-sm-2 btn btn-sm btn-success" onclick="removeCarouselPreviewImage('carousel-image')">Remove</a>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">Carousel Title</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="carousel-title" placeholder="Enter Title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2">Carousel Text</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="carousel-text" placeholder="Enter Text">
+                                </div>
+                            </div>
+                            <div class="form-group buttons-actions">
+                                <label class="col-sm-4">Actions 1 Label</label>
+                                <label class="col-sm-4">Actions 1 Data</label>
+                                <label class="col-sm-4">Actions 1 Type</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="carousel-action-1" placeholder="text">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="carousel-action-1-data" placeholder="data">
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="carousel-action-1-type" data-toggle="dropdown">
+                                            message
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#">message</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">postback</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">uri</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group buttons-actions">
+                                <label class="col-sm-4">Actions 2 Label</label>
+                                <label class="col-sm-4">Actions 2 Data</label>
+                                <label class="col-sm-4">Actions 2 Type</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="carousel-action-2" placeholder="text">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="carousel-action-2-data" placeholder="data">
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="carousel-action-2-type" data-toggle="dropdown">
+                                            message
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#">message</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">postback</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">uri</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group buttons-actions">
+                                <label class="col-sm-4">Actions 3 Label</label>
+                                <label class="col-sm-4">Actions 3 Data</label>
+                                <label class="col-sm-4">Actions 3 Type</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="carousel-action-3" placeholder="text">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="carousel-action-3-data" placeholder="data">
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="carousel-action-3-type" data-toggle="dropdown">
+                                            message
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#">message</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">postback</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">uri</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="btn btn-sm btn-success" onclick="sendCarouselFromBot()">Send</a>
+                        <hr>
+
+                        <div class="chat-bot chat-icon-only"></div>
+                        <div class="chat-template-carousel" id="preview-chat-template-carousel">
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Send Image Carousel -->
+                <div role="tabpanel" class="tab-pane bot-chat-box" id="imagecarousel">
+                    <div>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <i class="fa fa-plus-square fa-inverse fa-2x" onclick="addImageColumn();"></i>
+                                <label>Add new image</label>
+                                <i class="fa fa-minus-square fa-inverse fa-2x" onclick="removeImageColumn();"></i>
+                                <label>Delete selected</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2">Carousel Image</label>
+                                <div class="col-sm-8">
+                                    <input type=file id="image-carousel-image" directory />
+                                </div>
+                                <a class="col-sm-2 btn btn-sm btn-success" onclick="removeCarouselPreviewImage('carousel-image')">Remove</a>
+                            </div>
+
+                            <div class="form-group buttons-actions">
+                                <label class="col-sm-4">Actions Label</label>
+                                <label class="col-sm-4">Actions Data</label>
+                                <label class="col-sm-4">Actions Type</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="image-carousel-action" placeholder="text">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="image-carousel-action-data" placeholder="data">
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="image-carousel-action-type" data-toggle="dropdown">
+                                            message
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#">message</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">postback</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">uri</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="btn btn-sm btn-success" onclick="sendImageCarouselFromBot()">Send</a>
+                        <hr>
+                        <div class="chat-bot chat-icon-only"></div>
+                        <div class="chat-template-carousel" id="preview-chat-template-image-carousel">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
