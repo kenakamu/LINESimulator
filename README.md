@@ -17,6 +17,7 @@ When you stop it, Ctrl+C from the terminal.
 - node.js
 - And of course your LINE bot app :)
 - **This app is only tested in Chrome**
+
 ## Simulator setup
 Use following commands to clone and install module. Then for Windows run npm start.
 ```
@@ -132,7 +133,7 @@ By using the simulator POC feature, you can quickly craft LINE Bot chat mock via
 <br/>![upload.png](readme_img/upload.PNG)
 1. Select the json file you saved before.
 
-# Features
+# Common Features
 At the moment, the simulator can:
 - Send text, image, location, sticker, system events.
 - Display text
