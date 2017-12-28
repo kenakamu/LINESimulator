@@ -16,7 +16,7 @@ var pocMode;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Return all static files such as css and js in public folder.
-app.use(express.static('public'))
+app.use(express.static(__dirname + '/public'))
 
 /* Routing  */
 // For root, return the emulator
