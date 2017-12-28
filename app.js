@@ -106,7 +106,8 @@ app.post('/upload', function (req, res) {
         // Send request.
         request({
             headers: {
-                "X-Line-Signature": signature
+                "X-Line-Signature": signature,
+                "Content-Type": "application/json"
             },
             uri: botAPIAddress,
             body: jsonData,
