@@ -1,5 +1,6 @@
 // Dependencies.
 var express = require('express');
+var path = require('path');
 var bodyParser = require("body-parser");
 var fs = require('fs');
 var request = require('request');
@@ -54,18 +55,18 @@ app.post('/pocMode', function (req, res) {
 // Receive file from client and send appropriate event to API.
 app.post('/upload', function (req, res) {
     // Generate contentId by using time and copy the file into upload folder.
-    var contentId = Date.now();
-    if (!fs.existsSync(`${__dirname}\\public\\temp`)) {
-        fs.mkdirSync(`${__dirname}\\public\\temp`);
+    var contentId = Date.now().toString();
+    if (!fs.existsSync(path.join(__dirname, 'public', 'temp'))) {
+        fs.mkdirSync(path.join(__dirname, 'public', 'temp'));
     }
-    if (!fs.existsSync(`${__dirname}\\public\\temp\\${contentId}`)) {
-        fs.mkdirSync(`${__dirname}\\public\\temp\\${contentId}`);
+    if (!fs.existsSync(path.join(__dirname, 'public', 'temp', contentId))) {
+        fs.mkdirSync(path.join(__dirname, 'public', 'temp', contentId));
     }
     // Create message depending on file type (extension)
     var splitFileName = req.body.filename.split('\\');
     var filename = splitFileName[splitFileName.length - 1];
-    var filePath = `\\temp\\${contentId}\\${filename}`;
-    var fileFullPath = `${__dirname}\\public\\temp\\${contentId}\\${filename}`;
+    var filePath = path.join('temp', contentId, filename);
+    var fileFullPath = path.join(__dirname, 'public', 'temp', contentId, filename);
     if (req.body.base64string) {
         fs.writeFileSync(fileFullPath, new Buffer(req.body.base64string.split(',')[1], 'base64'));
     } else {
@@ -159,8 +160,8 @@ app.all('/*', function (req, res) {
     else if (url.indexOf('content') > -1) {
         // The actual file sit in public\temp. Returns the file with messageId
         let messageId = url.slice(url.indexOf('message') + 8, url.indexOf('content') - 1);
-        var files = fs.readdirSync(`${__dirname}\\public\\temp\\${messageId}`);
-        res.sendFile(`${__dirname}\\public\\temp\\${messageId}\\${files[0]}`);
+        var files = fs.readdirSync(path.join(__dirname, 'public', 'temp', messageId));
+        res.sendFile(path.join(__dirname, 'public', 'temp', messageId, files[0]));
     }
     else {
         handleRequest(req, res);
