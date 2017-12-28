@@ -57,10 +57,10 @@ app.post('/upload', function (req, res) {
     // Generate contentId by using time and copy the file into upload folder.
     var contentId = Date.now().toString();
     if (!fs.existsSync(path.join(__dirname, 'public', 'temp'))) {
-        fs.mkdirSync(path.join(__dirname, 'public', 'temp'));
+        fs.mkdirSync(path.resolve(__dirname, 'public', 'temp'));
     }
     if (!fs.existsSync(path.join(__dirname, 'public', 'temp', contentId))) {
-        fs.mkdirSync(path.join(__dirname, 'public', 'temp', contentId));
+        fs.mkdirSync(path.resolve(__dirname, 'public', 'temp', contentId));
     }
     // Create message depending on file type (extension)
     var splitFileName = req.body.filename.split('\\');
