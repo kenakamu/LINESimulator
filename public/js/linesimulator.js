@@ -1291,7 +1291,12 @@ function toggleRichMenu() {
               imgDiv += `<area shape="rect" coords="${area.bounds.x * scale},${area.bounds.y * scale},${area.bounds.width * scale + area.bounds.x * scale},${area.bounds.height * scale + area.bounds.y * scale}" href="javascript:sendTextMessage('${area.action.text}');">`;
             }
             else if (area.action.type === "postback") {
-              imgDiv += `<area shape="rect" coords="${area.bounds.x * scale},${area.bounds.y * scale},${area.bounds.width * scale + area.bounds.x * scale},${area.bounds.height * scale + area.bounds.y * scale}" href="javascript:sendTextMessage('${area.action.data}');">`;
+              if(area.action.text){
+                imgDiv += `<area shape="rect" coords="${area.bounds.x * scale},${area.bounds.y * scale},${area.bounds.width * scale + area.bounds.x * scale},${area.bounds.height * scale + area.bounds.y * scale}" href="javascript:sendPostback('${area.action.data}');sendTextMessage('${area.action.text}');">`;
+              }
+              else{
+                imgDiv += `<area shape="rect" coords="${area.bounds.x * scale},${area.bounds.y * scale},${area.bounds.width * scale + area.bounds.x * scale},${area.bounds.height * scale + area.bounds.y * scale}" href="javascript:sendPostback('${area.action.data}');">`;
+              }
             }
           }
 
