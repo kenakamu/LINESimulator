@@ -6,6 +6,7 @@
     --chat-header-height: 64px;
     --chat-highlight-color: rgb(54,67,94);
     --chat-keyboard-height: 236px;
+    --chat-richmenu-height: 0px;
     --chat-box-height: 50px;
     --chat-text-max-width: 300px;
     --chat-img-width: 250px;
@@ -129,6 +130,9 @@ body{
 }
 .chat-thread.keyboard ul{
     height: calc(var(--chat-height) - var(--chat-box-height) - var(--chat-keyboard-height));
+}
+.chat-thread.richmenu ul{
+    height: calc(var(--chat-height) - var(--chat-box-height) - var(--chat-richmenu-height));
 }
 .chat-thread .chat-top-space {
     height: var(--chat-header-height);
@@ -417,10 +421,13 @@ body{
 
 /*#region Chat box*/
 .chat-box {
-    background: var(--chat-highlight-color);
+    background: var(--chat-highlight-color);    
     height: var(--chat-box-height);
     padding: 10px;
     width: var(--chat-width);
+}
+.chat-bar {
+    display: none;
 }
 .chat-bar .chat-textarea {
     background: rgb(74,86,110);
@@ -438,6 +445,29 @@ body{
 .chat-bar .fa {
     margin-left: 10px;
 }
+.chat-bar.visible {
+    display: block;
+}
+
+.chat-bar-richmenu {
+    display: none;
+    padding-top: 5px;
+}
+.chat-bar-richmenu.visible {
+    display: block;
+}
+.chat-bar-richmenu .chat-bar-richmenu-item {
+    color: white;
+    float: left;
+    text-align: center;
+    width: 40%;
+}
+.chat-bar-richmenu .fa {
+    float: left;
+    margin-left: 10px;
+    margin-top: 4px;
+    width: 10%;
+}
 /*#endregion Chat box*/
 
 /*#region keyboard*/
@@ -447,15 +477,33 @@ body{
     z-index: 10;
 }
 .chat-keyboard{
-    visibility: hidden;
+    display: none;
 }
 .chat-keyboard.visible {
-    visibility: visible;
+    display: block;
 }
 .chat-keyboard.visible img{
     height: var(--chat-keyboard-height);
 }
 /*#endregion keyboard*/
+
+/*#region richmenu*/
+.chat-richmenu img{
+    position: relative;
+    width: var(--chat-width);
+    z-index: 10;
+}
+.chat-richmenu{
+    display: none;
+}
+.chat-richmenu.visible {
+    display: block;
+}
+.chat-richmenu.visible img{
+    height: var(--chat-richmenu-height);
+}
+/*#endregion richmenu*/
+
 
 /*#region Settings area*/
 .settings{

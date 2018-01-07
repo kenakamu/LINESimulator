@@ -157,8 +157,13 @@ POC 機能を使うことで UI のみで Bot の会話の流れを簡単にモ�
 1. チャットバーかメニューのキーボードアイコンをクリック。<br/>![keyboard.png](readme_img/keyboard.PNG)
 1. キーボードが出ることを確認。<br/>![withkeyboard.png](readme_img/withkeyboard.PNG)
 
+## リッチメニュー
+ユーザーに紐づいたリッチメニューをシミュレーションできます。尚、コンソールから設定した全体表のメニューはシミュレートできません。
+1. メニューのリッチメニューアイコンをクリック。<br/>![richmenu.png](readme_img/richmenu.PNG)
+1. ユーザーにリッチメニューが紐づいている場合は画面に表示、それ以外はアラートが表示。<br/>![withrichmenu.png](readme_img/withrichmenu.PNG)
+1. 再度メニューをクリックしてリッチメニュー非表示。
+
 ## 追加したい機能
 - 日付ピッカー
 - URI アクション
-- リッチメニュー
 - iPhone X/iPhone 8/Xperia XZ1 等のサイズの簡単な選択

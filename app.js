@@ -12,10 +12,12 @@ var botAPIAddress;
 var channelSecret;
 var channelToken;
 var pocMode;
+var richMenuId;
 
 // Specifie body parsers
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
+app.use(bodyParser.raw({ limit: '50mb', type: '*/*' }));
 // Return all static files such as css and js in public folder.
 app.use(express.static(__dirname + '/public'))
 
@@ -130,19 +132,62 @@ app.post('/send', function (req, res) {
         .update(jsonData)
         .digest().toString('base64');
 
-    request({
-        headers: {
-            "X-Line-Signature": signature,
-            "Content-Type": "application/json"
+    request(
+        {
+            headers: {
+                "X-Line-Signature": signature,
+                "Content-Type": "application/json"
+            },
+            uri: botAPIAddress,
+            body: jsonData,
+            method: 'POST'
         },
-        uri: botAPIAddress,
-        body: jsonData,
-        method: 'POST'
-    },
         function (error, response, body) {
             res.sendStatus(response.statusCode);
         }
     );
+});
+
+/* Get Rich menu for user */
+app.get('/richmenu/:userId/:richMenuId', function (req, res) {
+    // Generate hash based on https://developers.line.me/en/docs/messaging-api/reference/#signature-validation
+    let url = `bot/user/${req.params.userId}/richmenu`;
+    richMenuId = req.params.richMenuId;
+    request({
+        headers: { 'Authorization': `Bearer ${channelToken}` },
+        uri: `${lineAPIUrl}${url}`,
+        method: "GET"
+    }, function (error, response, body) {
+        if (JSON.parse(response.body).message === "the user has no richmenu") {
+            res.send({ "message": "no menu" });
+        }
+        // If rich menuId is same as passed one, do nothing.
+        else if (JSON.parse(response.body).richMenuId == richMenuId) {
+            res.send(null);
+        }
+        // otherwise get the richmenu.
+        else {
+            richMenuId = JSON.parse(response.body).richMenuId;
+            url = `bot/richmenu/${richMenuId}/content`;
+            request({
+                headers: { 'Authorization': `Bearer ${channelToken}` },
+                encoding: null,
+                uri: `${lineAPIUrl}${url}`,
+                method: "GET"
+
+            }, function (error, response, body) {
+                var image = body;
+                url = `bot/richmenu/${richMenuId}`;
+                request({
+                    headers: { 'Authorization': `Bearer ${channelToken}` },
+                    uri: `${lineAPIUrl}${url}`,
+                    method: "GET"
+                }, function (error, response, body) {
+                    res.send({ "richMenu": JSON.parse(body), "image": image });
+                });
+            });
+        }
+    });
 });
 
 //#region Behave as LINE Platform

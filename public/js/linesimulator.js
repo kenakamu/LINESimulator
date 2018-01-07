@@ -1,5 +1,4 @@
 (function () {
-
   // Load settings at startup
   function loadSettings() {
     userId = localStorage.getItem('userId');
@@ -152,17 +151,17 @@ function setSettings() {
       error: function (xhr, ajaxOptions, thrownError) {
         $('.warning')[0].innerText = `Error : ${JSON.parse(xhr.responseText).message}`;
       }
-    });    
+    });
   }
 }
 
 var pocMode;
 function setPocMode(mode) {
   pocMode = mode;
-  if(pocMode && $('.bot-chat').hasClass('hide')){
+  if (pocMode && $('.bot-chat').hasClass('hide')) {
     $('.bot-chat').removeClass('hide');
   }
-  else if(!pocMode && !$('.bot-chat').hasClass('hide')){
+  else if (!pocMode && !$('.bot-chat').hasClass('hide')) {
     $('.bot-chat').addClass('hide');
   }
   $.ajax({
@@ -208,19 +207,18 @@ function onSelectChatItem(obj) {
 
 function moveItem(obj, up) {
   let target;
-  if(up){
+  if (up) {
     target = $(obj).parents('li').prev().prev()
     $(obj).parents('li').prev().insertBefore(target);
     $(obj).parents('li').insertBefore(target);
   }
-  else
-  {
-    target = $(obj).parents('li').next();   
-    origin = $(obj).parents('li').prev(); 
+  else {
+    target = $(obj).parents('li').next();
+    origin = $(obj).parents('li').prev();
     origin.insertAfter(target);
     $(obj).parents('li').insertAfter(origin);
   }
- 
+
 }
 
 function removeChatItem(obj) {
@@ -1213,14 +1211,21 @@ function sendImageCarouselFromBot() {
 function toggleKeyboard() {
   var keyboard = $('.chat-keyboard');
   var chatthread = $('.chat-thread');
-  if (keyboard.hasClass("visible")) {
-    keyboard.removeClass("visible");
+
+  chatthread.removeClass('richmenu');
+  $('.chat-richmenu').removeClass('visible');
+  $('.chat-bar').addClass('visible');
+  $('.chat-bar-richmenu').removeClass('visible');
+
+  if (keyboard.hasClass('visible')) {
+    keyboard.removeClass('visible');
     chatthread.removeClass('keyboard')
   }
   else {
-    keyboard.addClass("visible");
-    chatthread.addClass("keyboard");
+    keyboard.addClass('visible');
+    chatthread.addClass('keyboard');
   }
+  $('.chat-thread li').last().focus();
 }
 var zoom = 1;
 function zoomin() {
@@ -1243,6 +1248,76 @@ function toggleMoreMenu() {
   else {
     $('.moreMenu').addClass("hide");
   }
+}
+function toggleRichMenu() {
+  let richmenu = $('.chat-richmenu');
+  let chatthread = $('.chat-thread');
+  let chatbar = $('.chat-bar');
+  let chatbarrichmenu = $('.chat-bar-richmenu');
+  $('.chat-keyboard').removeClass('visible');
+  chatthread.removeClass('keyboard');
+
+  if (richmenu.hasClass('visible')) {
+    richmenu.removeClass('visible');
+    chatthread.removeClass('richmenu');
+    chatbarrichmenu.removeClass('visible');
+    chatbar.addClass('visible');
+  }
+  else {
+    $.ajax({
+      url: `/richmenu/${localStorage.getItem('userId')}/${localStorage.getItem('richMenuId')}`,
+      type: "GET",
+      success: function (data) {
+        if (data.message === "no menu") {
+          localStorage.removeItem('richMenuId');
+          window.alert("no rich menu for the user");
+          // As there is no menu, do nothing.
+          return;
+        }
+        else if (data == "") {
+          // As richmenu id didnt changed, do nothing but show rich menu.
+        }
+        else {
+          localStorage.setItem('richMenuId', data.richMenu.richMenuId);
+          richmenu[0].innerHTML = "";
+          let imgDiv = `<img src="data:image/png;base64,${_arrayBufferToBase64(data.image.data)}" usemap="#richmenumap"/><map name="richmenumap">`;
+          let scale = Number($(':root').css('--chat-width').replace('px', '')) / data.richMenu.size.width;
+          for (let i = 0; i < data.richMenu.areas.length; i++) {
+            let area = data.richMenu.areas[i];
+            if (area.action.type === "uri") {
+              imgDiv += `<area shape="rect" coords="${area.bounds.x * scale},${area.bounds.y * scale},${area.bounds.width * scale + area.bounds.x * scale},${area.bounds.height * scale + area.bounds.y * scale}" href="${area.action.uri}" target="_blank">`;
+            }
+            else if (area.action.type === "message") {
+              imgDiv += `<area shape="rect" coords="${area.bounds.x * scale},${area.bounds.y * scale},${area.bounds.width * scale + area.bounds.x * scale},${area.bounds.height * scale + area.bounds.y * scale}" href="javascript:sendTextMessage('${area.action.text}');">`;
+            }
+            else if (area.action.type === "postback") {
+              imgDiv += `<area shape="rect" coords="${area.bounds.x * scale},${area.bounds.y * scale},${area.bounds.width * scale + area.bounds.x * scale},${area.bounds.height * scale + area.bounds.y * scale}" href="javascript:sendTextMessage('${area.action.data}');">`;
+            }
+          }
+
+          imgDiv += `</map>`
+
+          $(':root').css('--chat-richmenu-height', scale * data.richMenu.size.height + 'px');
+          richmenu.append(imgDiv);
+          $('.chat-bar-richmenu-item')[0].innerText = data.richMenu.chatBarText;
+        }
+        richmenu.addClass('visible');
+        chatthread.addClass('richmenu');
+        chatbarrichmenu.addClass('visible');
+        chatbar.removeClass('visible');
+        $('.chat-thread li').last().focus();
+      }
+    });
+  }
+}
+function _arrayBufferToBase64(buffer) {
+  var binary = '';
+  var bytes = new Uint8Array(buffer);
+  var len = bytes.byteLength;
+  for (var i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
 }
 function toggleSettings() {
   if ($('.settings').hasClass("hide")) {
@@ -1270,7 +1345,7 @@ function saveChat() {
     if ($(this).attr('data') != null) {
       let jsonData = JSON.parse($(this).attr('data'));
       // If this is media, then save src as part of export information.
-      if($(this).children('img').attr('src') != null){
+      if ($(this).children('img').attr('src') != null) {
         jsonData.path = $(this).children('img').attr('src');
       }
       data.push(jsonData);
@@ -1298,13 +1373,13 @@ function loadJson() {
       }
       else {
         // If this is from user, then check if it has path, then its media.
-        if(jsonData.path == null){
+        if (jsonData.path == null) {
           appendUserInputToThread(jsonData);
         }
-        else{
+        else {
           let path = jsonData.path;
           delete jsonData.path;
-          appendMediaToThread({"filePath":path,"sendObject":jsonData});
+          appendMediaToThread({ "filePath": path, "sendObject": jsonData });
         }
       }
     });

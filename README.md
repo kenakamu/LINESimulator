@@ -161,8 +161,13 @@ You can simulate how keyboard hides the chat window.
 1. Click keyboard icon either in chatbar or in menu.<br/>![keyboard.png](readme_img/keyboard.PNG)
 1. You see keyboard is appearing in the chat. You cannot type via keyboard as this is just an image.<br/>![withkeyboard.png](readme_img/withkeyboard.PNG)
 
+## Rich Menu
+You can simulate how Rich Menu works. The default rich menu set in developer console cannot be simulated.
+1. Click rich menu icon in menu.<br/>![richmenu.png](readme_img/richmenu.PNG)
+1. You see rich menu if the user has one, otherwise see the alert.<br/>![withrichmenu.png](readme_img/withrichmenu.PNG)
+1. Click the menu again to hide it.
+
 ## Feature to be added
 - Datetime Picker
 - URL actions
-- Rich menus
 - Simulator choice such as iPhone X/iPhone 8/Xperia XZ1 etc.

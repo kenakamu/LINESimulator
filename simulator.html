@@ -4,11 +4,12 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/site.css">
+    <title>LINE Simulator</title>
 </head>
 
 <body>
     <div class="col-md-12">
-        <!-- zoom menu  -->
+        <!-- menu  -->
         <div class="menu">
             <div>
                 <i class="fa fa-search-plus fa-inverse fa-3x" onclick="zoomin();">
@@ -38,6 +39,11 @@
             <div>
                 <i class="fa fa-caret-square-o-right fa-inverse fa-3x" onclick="toggleMoreMenu();">
                     <span>Send non-text messages.</span>
+                </i>
+            </div>
+            <div>
+                <i class="fa fa-picture-o fa-inverse fa-3x" onclick="toggleRichMenu();">
+                    <span>Display Rich Menu for the user.</span>
                 </i>
             </div>
             <div>
@@ -92,11 +98,13 @@
                     <!-- <ul class="chat-body"> -->
                     <ul>
                         <li class="chat-top-space"></li>
-                        
+
                     </ul>
                 </div>
+                <div class="chat-richmenu">
+                </div>
                 <div class="chat-box">
-                    <div class="chat-bar">
+                    <div class="chat-bar visible">
                         <i class="fa fa-keyboard-o fa-inverse fa-lg" onclick="toggleKeyboard();"></i>
                         <span class="fa-stack" onclick="toggleMoreMenu();">
                             <i class="fa fa-square fa-stack-2x fa-inverse"></i>
@@ -109,10 +117,16 @@
                             <i class="fa fa-paper-plane fa-inverse"></i>
                         </a>
                     </div>
+                    <div class="chat-bar-richmenu">
+                        <i class="fa fa-keyboard-o fa-inverse fa-lg" onclick="toggleKeyboard();"></i>
+                        <div class="chat-bar-richmenu-item" onclick="toggleRichMenu();"></div>
+                        <div class="chat-bar-richmenu-item">Menu</div>
+                    </div>
                 </div>
                 <div class="chat-keyboard">
                     <img src="/img/keyboard.png" />
                 </div>
+
                 <!-- end chat-message -->
             </div>
         </div>
