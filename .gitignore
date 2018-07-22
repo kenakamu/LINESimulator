@@ -6,6 +6,7 @@ release/
 build/
 dist/
 .vscode/
+userData/
 
 /public/temp
 # User-specific files
