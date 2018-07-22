@@ -18,52 +18,39 @@
     --chat-template-image-carousel-image-height: 300px;
     --chat-transform-scale: calc(414/1050); /* This is for imagemap.*/
 }
+html, body{
+    height: 100vh;
+}
 body{
-    background: rgb(52,57,62);
+    background: rgba(0,0,0,0);
+    /* overflow: hidden; */
+    /* background: rgb(52,57,62);     */
 }
 .hide{
     display: none;
 }
 
-/* menu area */
-.menu{
+/*#region simulator*/
+.simulator-wrap{
     float: left;
-    padding: 24px;
-    position: relative;
-    text-align: center;
-}
-.menu i span {
-    background: black;
-    border-color: white;
-    border-style: solid;
-    border-width: 3px;
-    display: none;
-    font-size: 20px;
-    padding: 10px;
-    position: absolute;
-    width: 300px;
-    z-index: 20;
-}  
-.menu i:hover span {
-    display: block
+    padding-right: 5px;
 }
 
-/*#region simulator*/
 .simulator{
-    background: black;
-    border-radius: 25px;
+    background: black; 
+    border-radius: 50px;
+    box-shadow: 15px 15px 15px rgba(80,80,80,.5);
     float: left;  
     height: calc(var(--chat-height) + 150px);
-    margin-top: 24px;
     position: relative;  
-    width: calc(var(--chat-width) + 50px);
     transform-origin: 0px 0px 0px;
+    width: calc(var(--chat-width) + 50px);
 }
 
 .chat-area {  
     height: var(--chat-height);
     margin: auto;
-    padding-top: 75px;
+    padding-top: 70px;
     width: var(--chat-width);
 }
 
@@ -426,6 +413,10 @@ body{
     padding: 10px;
     width: var(--chat-width);
 }
+.chat-box input[type="text"]:focus {
+    outline: 0;
+}
+
 .chat-bar {
     display: none;
 }
@@ -442,7 +433,7 @@ body{
     resize: none; 
     width: calc(var(--chat-width) - 144px);
 }    
-.chat-bar .fa {
+.chat-bar .fas {
     margin-left: 10px;
 }
 .chat-bar.visible {
@@ -462,7 +453,7 @@ body{
     text-align: center;
     width: 40%;
 }
-.chat-bar-richmenu .fa {
+.chat-bar-richmenu .fas {
     float: left;
     margin-left: 10px;
     margin-top: 4px;
@@ -504,44 +495,17 @@ body{
 }
 /*#endregion richmenu*/
 
-
-/*#region Settings area*/
-.settings{
-    background: gray;
-    color: black;
-    float: left;
-    height: 100%;
-    margin: 24px 0 24px 79px;
-    opacity: 0.98;
-    padding:24px;
-    position: absolute;
-    width: 90%;
-    z-index:30;
-}
-.settings h4{
-    color: white;
-}
-.settings input{
-    width:100%;
-}
-.settings .update{
-    padding-top: 24px;
-}
-.settings .warning{
-    color: white;
-    font-size: 21px;    
-}
-/*#endregion Settings area*/
-
 /*#region more menu*/
 .moreMenu{
+    background: black;
     border-color: lightgray;
+    border-radius: 20px;
     border-style: solid;
     border-width: 2px;
     bottom: 0;
+    box-shadow: 15px 15px 15px rgba(80,80,80,.5);
     color: white;
     float: left;
-    margin-top: 24px;    
     padding: 24px;
     position: relative;
     width: 500px;
@@ -552,96 +516,3 @@ body{
     width: 100%;
 }
 /*#endregion more menu*/
-
-/*#region JSON for each chat item */
-.chat-raw {
-    float: left;
-    margin: 24px;
-    position: relative;
-}
-.chat-raw pre{
-    background-color: rgb(52,57,62);
-    border-color: lightgray;
-    border-width: 4px;
-    border-style: solid; 
-    color:white;
-    font-size: 20px;
-    max-width: 700px;
-    overflow-y: hidden;
-    padding: 24px;    
-    width: auto;   
-    word-wrap: break-word;
-}
-.chat-raw i{
-    padding: 24px;
-    position: absolute;
-    right: 0;
-}
-/*#endregion JSON for each chat item */
-
-/*#region bot-chat*/
-.bot-chat{
-    border-color: lightgray;
-    border-style: solid;
-    border-width: 2px;
-    bottom: 0;
-    color: white;
-    float: left;
-    margin-top: 24px;
-    margin-left: 10px;    
-    padding: 24px;
-    position: relative;
-    width:750px;
-}
-.bot-chat-body{
-    margin: 20px 0px 0px 0px;
-}
-.bot-chat-box .chat-textarea {
-    background: white;
-    border: none;
-    border-radius: 30px;
-    color: black;
-    height: 30px;
-    line-height: 30px;
-    padding-left:10px;
-    resize: none; 
-    width: calc(var(--chat-width) - 144px);
-}
-.bot-chat-box input{
-    background: white;
-    color:black;
-}
-/*#endregion bot-chat*/
-.chat-item-tool {
-    background: var(--chat-highlight-color);
-    border-radius: 20px;
-    clear: both;
-    display: block;
-    margin: 0 5px 10px 0;
-    padding: 10px 20px;
-    position: relative;
-    white-space: nowrap;
-    width:50%;  
-}
-.chat-item-tool:before{
-    border-color: transparent;
-    border-bottom-color: var(--chat-highlight-color);
-    border-width: 0 15px 15px;
-    content: "";
-    left: 20%;   
-    position: absolute;
-    top: -10px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-}
-.chat-item-tool i {
-    margin-right: 10px;
-}
-.chat-item-tool.chat-user:before {
-    left:70%
-}
-.chat-item-tool i.right{
-    position: absolute;
-    right: 10px;
-}

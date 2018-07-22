@@ -1,37 +1,46 @@
 {
-	"name": "line-simulator",
-	"version": "0.2.2",
-	"displayName": "LINE Simulator for Bot developer",
-	"description": "LINE Simulator for Bot developer",
-	"publisher": "kenakamu",
-	"author": {
-		"name": "kenakamu"
-	},
-	"dependencies": {
-		"body-parser": "^1.18.2",
-		"connect-multiparty": "^2.1.0",
-		"express": "^4.15.2",
-		"request": "^2.83.0",
-		"shelljs": "^0.7.8",
-		"socket.io": "^2.0.4"
-	},
-	"keywords": [
-		"LINE",
-		"Bot"
-	],
-	"scripts": {
-		"start": "start http://localhost:8080 && node app.js",
-		"startMac": "open http://localhost:8080 && node app.js",
-		"startLinux": "xdg-open http://localhost:8080 && node app.js"
-	},
-	"bin": {
-		"line-simulator": "run.js"
-	},
-	"repository": {
-		"url": "https://github.com/kenakamu/LINESimulator"
-	},
-	"bugs": {
-		"url": "https://github.com/kenakamu/LINESimulator/issues"
-	},
-	"license": "MIT"
+  "name": "linesimulator",
+  "version": "2.0.0",
+  "description": "LINE Bot Simulator",
+  "main": "dist/main.js",
+  "scripts": {
+    "start": "electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/favicon.ico --prune=true --out=release-builds",
+    "package-win": "electron-packager . line-simulator --overwrite --asar=true --platform=win32 --arch=ia32 --icon=src/favicon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"LINE Simulator\"",
+    "package-linux": "electron-packager . line-simulator --overwrite --asar=true --platform=linux --arch=x64 --icon=src/favicon.ico --prune=true --out=release-builds"
+  },
+  "keywords": [
+    "linebot"
+  ],
+  "author": "kenakamu",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^2.24.6",
+    "electron": "2.0.5",
+    "electron-installer-dmg": "^2.0.0",
+    "electron-packager": "^12.1.0",
+    "electron-winstaller": "^2.6.4",
+    "gulp": "^3.9.1",
+    "gulp-cached": "^1.1.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-plumber": "^1.2.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-typescript": "^5.0.0-alpha.3",
+    "source-map-support": "^0.5.6",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/express": "^4.16.0",
+    "@types/jquery": "^3.3.4",
+    "@types/nedb": "^1.8.5",
+    "@types/socket.io": "^1.4.36",
+    "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.16.3",
+    "nedb": "^1.8.0",
+    "remote": "^0.2.6",
+    "request": "^2.87.0",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1"
+  }
 }

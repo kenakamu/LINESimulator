@@ -1,48 +1,28 @@
 # LINE Simulator for BOT developer
-日本語は[こちら](./README_ja.md)
 
 Are you getting tired using physical device for debug your LINE bot? Yes I am! This project contains simulator to boost your developer productivity.
 
-# Install from npm
-If you just want to use it, install and run from npm.
-```
-npm install -g line-simulator
-line-simulator
-```
-or for macOS, 
-```
-sudo npm install -g line-simulator
-sudo line-simulator
-```
-It will open a browser and start the service on port 8080. I recommend using Chrome as browser.
-When you stop it, Ctrl+C from the terminal.
+This is electron base native application. There is web-based npm package available as well. For web-base app, check [master branch](https://github.com/kenakamu/LINESimulator/)
+
+# Install from installer
+If you just want to use it, install and run from install package from here.
+*Only Windows version available at the moment.
+
 
 # Get it from GitHub
 ## Prerequisits
 - LINE developer account
 - node.js
 - And of course your LINE bot app :)
-- **This app is only tested in Chrome**
 
 ## Simulator setup
 Use following commands to clone and install module. Then for Windows run npm start.
 ```
-git clone https://github.com/kenakamu/LINESimulator
+git clone https://github.com/kenakamu/LINESimulator/
+checkout native-app
 npm install
 npm start
 ```
-
-for MacOS, replace the last command as:
-```
-npm startMac
-```
-
-for Linux, replace the last command as: 
-```
-npm startLinux
-```
-
-If you prefer using different browser, then open it and manully connect to http://localhost:8080
 
 # How this works
 This app works as LINE client simnulator, as well as LINE Platform simulator. All the request from your bot application shall come to this simulator, and it will redirect to LINE platform if necessary, otherwise it just returns the message to simulator UI.
@@ -166,8 +146,3 @@ You can simulate how Rich Menu works. The default rich menu set in developer con
 1. Click rich menu icon in menu.<br/>![richmenu.png](readme_img/richmenu.PNG)
 1. You see rich menu if the user has one, otherwise see the alert.<br/>![withrichmenu.png](readme_img/withrichmenu.PNG)
 1. Click the menu again to hide it.
-
-## Feature to be added
-- Datetime Picker
-- URL actions
-- Simulator choice such as iPhone X/iPhone 8/Xperia XZ1 etc.

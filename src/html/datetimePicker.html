@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Datetime Picker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./../css/datetimePicker.css">
+</head>
+
+<body>
+    <div class="datetimepicker" style="-webkit-app-region: drag">
+        <h5>data:
+            <span id="data"></span>
+        </h5>
+        <h5>mode:
+            <span id="mode"></span>
+        </h5>
+        <h5>initial:
+            <span id="initial"></span>
+        </h5>
+        <h5>max:
+            <span id="max"></span>
+        </h5>
+        <h5>min:
+            <span id="min"></span>
+        </h5>
+        <input type="datetime-local" id="datetime" style="-webkit-app-region: no-drag"/>
+        <button class="btn btn-success" id="submit" style="-webkit-app-region: no-drag">Submit</button>
+
+        <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./../js/datetimePicker.js"></script>
+        <script>if (window.module) module = window.module;</script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>LINE Simulator</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./../css/index.css">
+</head>
+
+<body>
+  <div class="settings">
+    <h2>
+      <b><span class="line">LINE</span> Simulator</b>
+    </h2>
+    <div class="row">
+      <h4>UserId:</h4>
+      <div class="col-md-12">
+        <input type=text placeholder="U21d2cd1795be4caa1a32dxxxxxxxx" id="userId" value="" />
+      </div>
+    </div>
+    <div class="row">
+      <h4>channelSecret:</h4>
+      <div class="col-md-12">
+        <input type=text placeholder="Channel Secret" id="channelSecret" value="" />
+      </div>
+    </div>
+    <div class="row">
+      <h4>channelToken:</h4>
+      <div class="col-md-12">
+        <input type=text placeholder="Channel Token" id="channelToken" value=""
+        />
+      </div>
+    </div>
+    <div class="row">
+      <h4>Bot API Server Address:</h4>
+      <div class="col-md-12">
+        <input type=text placeholder="http://localhost:1590/api/linebot" id="botAPIAddress" value=""
+        />
+      </div>
+    </div>
+    <div class="update">
+      <a class="col-md-2 btn btn-success" onclick="connect()">CONNECT</a>
+      <a class="col-md-2 btn btn-primary" onclick="poc()">POC MODE</a>
+      <div class="col-md-12 warning"></div>
+    </div>
+  </div>
+  <div class="indicator hide">
+    <h1 id="message"></h3>
+  </div>
+  <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://use.fontawesome.com/3a3680e4e7.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./../js/index.js"></script>
+  <script>if (window.module) module = window.module;</script>
+</body>
+</html>

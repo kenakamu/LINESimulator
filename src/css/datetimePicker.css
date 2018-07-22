@@ -1,0 +1,14 @@
+html, body{
+    height: 100vh;
+}
+body{
+    background: rgba(0,0,0,0);
+    padding:25px;
+    /* overflow: hidden; */
+    /* background: rgb(52,57,62);     */
+}
+.datetimepicker{
+    padding:10px;
+    background: rgba(239,242,245,1);
+    box-shadow: 15px 15px 15px rgba(80,80,80,.5);
+}

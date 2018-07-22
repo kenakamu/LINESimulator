@@ -1,0 +1,22 @@
+.chat-raw {
+    float: left;
+    position: relative;
+}
+.chat-raw pre{
+    background-color: rgb(52,57,62);
+    border-color: lightgray;
+    border-width: 4px;
+    border-style: solid; 
+    color:white;
+    font-size: 13px;
+    max-width: 700px;
+    overflow-y: hidden;
+    padding: 24px;    
+    width: auto;   
+    word-wrap: break-word;
+}
+.chat-raw i{
+    padding: 24px;
+    position: absolute;
+    right: 0;
+}

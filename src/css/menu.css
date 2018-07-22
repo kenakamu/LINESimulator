@@ -1,0 +1,27 @@
+.menu-wrap{
+    float: left;
+    padding-right: 5px;
+    position: relative;
+}
+.menu{  
+    background: black;
+    border-radius: 20px;
+    box-shadow: 15px 15px 15px rgba(80,80,80,.5);
+    padding: 10px;
+    text-align: center;
+}
+.menu i span {
+    background: black;
+    border-color: white;
+    border-style: solid;
+    border-width: 3px;
+    display: none;
+    font-size: 20px;
+    padding: 10px;
+    position: absolute;
+    width: 300px;
+    z-index: 20;
+}  
+.menu i:hover span {
+    display: block
+}
