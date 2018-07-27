@@ -15,8 +15,10 @@
   "author": "kenakamu",
   "license": "MIT",
   "devDependencies": {
+    "appdmg": "^0.5.2",
     "browser-sync": "^2.24.6",
     "electron": "2.0.5",
+    "electron-builder": "^20.26.0",
     "electron-installer-dmg": "^2.0.0",
     "electron-packager": "^12.1.0",
     "electron-winstaller": "^2.6.4",
