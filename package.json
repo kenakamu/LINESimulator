@@ -5,9 +5,9 @@
   "main": "dist/main.js",
   "scripts": {
     "start": "electron .",
-    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/favicon.ico --prune=true --out=release-builds",
-    "package-win": "electron-packager . line-simulator --overwrite --asar=true --platform=win32 --arch=ia32 --icon=src/favicon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"LINE Simulator\"",
-    "package-linux": "electron-packager . line-simulator --overwrite --asar=true --platform=linux --arch=x64 --icon=src/favicon.ico --prune=true --out=release-builds"
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/icons/favicon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . line-simulator --overwrite --asar=true --platform=win32 --arch=ia32 --icon=src/icons/favicon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"LINE Simulator\"",
+    "package-linux": "electron-packager . line-simulator --overwrite --asar=true --platform=linux --arch=x64 --icon=src/icons/favicon.png --prune=true --out=release-builds"
   },
   "keywords": [
     "linebot"
