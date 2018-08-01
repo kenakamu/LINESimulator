@@ -22,7 +22,7 @@
   const io = require('socket.io')(http);
   const port: number = 8080;
   const nedb = require('nedb');
-  const db = new nedb({ filename: path.join(app.getPath('userData'), 'data'), autoload: true })
+  const db = new nedb({ filename: path.join(app.getPath('userData'), 'data'), autoload: true });
   let settings: lineSettings;
   var pocMode: boolean = false;
   // Load the settings first.
@@ -61,7 +61,8 @@
       userId: req.body.userId,
       channelSecret: req.body.channelSecret,
       channelToken: req.body.channelToken,
-      botAPIAddress: req.body.botAPIAddress
+      botAPIAddress: req.body.botAPIAddress,
+      alwaysOnTop: req.body.alwaysOnTop
     };
     db.remove({}, { multi: true }, (err, numRemoved) => {
       db.insert(settings, (err, newDoc) => {
@@ -293,7 +294,7 @@
     win.loadURL(`http://localhost:${port}`);
 
     // Open the DevTools.
-    //win.webContents.openDevTools()
+    win.webContents.openDevTools();
 
     // Emitted when the window is closed.
     win.on('closed', () => {
@@ -303,48 +304,75 @@
       win = null
     });
 
-    var menu = Menu.buildFromTemplate([
-      {
-        label: 'Menu',
-        submenu: [
-          { type: 'separator' },
-          {
-            label: 'Exit', click() {
-              app.quit();
+    if (process.platform === 'darwin') {
+      var menu = Menu.buildFromTemplate([
+        {
+          label: 'Menu',
+          submenu: [
+            {
+              label: "Quit", accelerator: 'CmdOrCtrl+Q', click: () => {
+                app.hide();
+              }
             }
-          }
-        ]
-      },
-      {
-        label: 'LINE Info',
-        submenu: [
-          {
-            label: 'LINE Developer Console', click() {
-              shell.openExternal('https://developers.line.me/console/');
+          ]
+        },
+        {
+          label: 'LINE Info',
+          submenu: [
+            {
+              label: 'LINE Developer Console', click: () => {
+                shell.openExternal('https://developers.line.me/console/');
+              }
+            },
+            {
+              label: 'Messaging API Reference', click: () => {
+                shell.openExternal('https://developers.line.me/ja/reference/messaging-api/');
+              }
             }
-          },
-          {
-            label: 'Messaging API Reference', click() {
-              shell.openExternal('https://developers.line.me/ja/reference/messaging-api/');
+          ]
+        },
+        {
+          label: "Edit",
+          submenu: [
+            { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+            { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+            { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+            { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+            { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+            { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+          ]
+        }
+      ]);
+    }
+    else {
+      var menu = Menu.buildFromTemplate([
+        {
+          label: 'Menu',
+          submenu: [
+            {
+              label: "Quit", click: () => {
+                app.quit();
+              }
             }
-          }
-        ]
-      },
-      {
-        label: "Edit",
-        submenu: [
-          { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-          { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-          { type: "separator" },
-          { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-          { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-          { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-          { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
-        ]
-
-      }
-    ]);
-
+          ]
+        },
+        {
+          label: 'LINE Info',
+          submenu: [
+            {
+              label: 'LINE Developer Console', click: () => {
+                shell.openExternal('https://developers.line.me/console/');
+              }
+            },
+            {
+              label: 'Messaging API Reference', click: () => {
+                shell.openExternal('https://developers.line.me/ja/reference/messaging-api/');
+              }
+            }
+          ]
+        }
+      ]);
+    }
     Menu.setApplicationMenu(menu);
   }
 

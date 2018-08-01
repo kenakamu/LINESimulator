@@ -45,9 +45,16 @@ body {
     border-bottom-width: 2px;
     border-color:lightgray;
 }
+.settings input[type="checkbox"]{
+    margin: 5px 10px 5px 5px;
+    width: auto;
+}
 
 .settings input[type="text"]:focus {
     outline: 0;
+}
+.settings label{
+    float: left;
 }
 
 .indicator {

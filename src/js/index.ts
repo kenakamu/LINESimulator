@@ -9,15 +9,16 @@
     const nedb = require('nedb');
     const db = new nedb({ filename: path.join(app.getPath('userData'), 'data'), autoload: true })
     const BrowserWindow = electron.remote.BrowserWindow;
+    const Menu = electron.remote.Menu;
     const ipc = electron.ipcRenderer;
     const port = 8080;
     let settings: lineSettings;
-    let pocMode : boolean = false;
+    let pocMode: boolean = false;
     let indicator = $('.indicator');
     let indicatorMessage = $('#message');
-  
+
     function loadSettings() {
-        
+
         indicatorMessage.text("loading data...");
         toggleIndicator();
         // Load data from nedb.
@@ -29,6 +30,7 @@
                 $("#channelSecret").val(settings.channelSecret);
                 $("#channelToken").val(settings.channelToken);
                 $("#botAPIAddress").val(settings.botAPIAddress);
+                (<HTMLInputElement>$("#alwaysOnTop")[0]).checked = settings.alwaysOnTop; 
             }
             toggleIndicator();
         });
@@ -49,7 +51,8 @@
                 userId: userId,
                 channelSecret: channelSecret,
                 channelToken: channelToken,
-                botAPIAddress: botAPIAddress
+                botAPIAddress: botAPIAddress,
+                alwaysOnTop: (<HTMLInputElement>$("#alwaysOnTop")[0]).checked
             };
             indicatorMessage.text("connecting user...");
             toggleIndicator();
@@ -85,11 +88,11 @@
             }
         });
     }
-
+    
     let simulator;
     function runSimulator(pocMode: boolean = false) {
         simulator = new BrowserWindow({
-            alwaysOnTop: true,
+            alwaysOnTop: (<HTMLInputElement>$("#alwaysOnTop")[0]).checked,
             transparent: true,
             frame: false,
             autoHideMenuBar: true,
@@ -97,9 +100,9 @@
             height: screen.availHeight,
             show: false
         });
-        simulator.on('close', () => { 
-            simulator = null; 
-            ipc.send('simulator-status', false); 
+        simulator.on('close', () => {
+            simulator = null;
+            ipc.send('simulator-status', false);
         });
         simulator.loadURL(`http://localhost:${port}/simulator`);
         simulator.show();
@@ -108,16 +111,17 @@
         simulator.webContents.once('dom-ready', () => {
             simulator.webContents.send('pocMode', pocMode);
             simulator.show();
-            ipc.send('simulator-status', true); 
+            ipc.send('simulator-status', true);
         });
+
     }
     loadSettings();
 
-    function toggleIndicator(){
+    function toggleIndicator() {
         if (indicator.hasClass("hide")) {
             indicator.removeClass("hide");
         }
-        else {            
+        else {
             indicator.addClass("hide");
         }
     }

@@ -11,7 +11,8 @@
 <body>
   <div class="settings">
     <h2>
-      <b><span class="line">LINE</span> Simulator</b>
+      <b>
+        <span class="line">LINE</span> Simulator</b>
     </h2>
     <div class="row">
       <h4>UserId:</h4>
@@ -28,15 +29,22 @@
     <div class="row">
       <h4>channelToken:</h4>
       <div class="col-md-12">
-        <input type=text placeholder="Channel Token" id="channelToken" value=""
-        />
+        <input type=text placeholder="Channel Token" id="channelToken" value="" />
       </div>
     </div>
     <div class="row">
       <h4>Bot API Server Address:</h4>
       <div class="col-md-12">
-        <input type=text placeholder="http://localhost:1590/api/linebot" id="botAPIAddress" value=""
-        />
+        <input type=text placeholder="http://localhost:1590/api/linebot" id="botAPIAddress" value="" />
+      </div>
+    </div>
+    <div class="row">
+      <h4>Simulator Settings:</h4>
+
+      <div class="col-md-12 checkbox">
+        <label for="alwaysOnTop">always on top</label>
+        <input type="checkbox" class="checkbox" id="alwaysOnTop">
+
       </div>
     </div>
     <div class="update">
@@ -46,7 +54,8 @@
     </div>
   </div>
   <div class="indicator hide">
-    <h1 id="message"></h3>
+    <h1 id="message">
+      </h3>
   </div>
   <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -55,4 +64,5 @@
   <script src="./../js/index.js"></script>
   <script>if (window.module) module = window.module;</script>
 </body>
+
 </html>
