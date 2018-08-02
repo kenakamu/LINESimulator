@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "package-mac": "electron-packager . LINESimulator --overwrite --platform=darwin --arch=x64 --icon=src/icons/favicon.icns --prune=true --out=release-builds",
-    "package-win": "electron-packager . LINESimulator --overwrite --asar=true --platform=win32 --arch=ia32 --icon=src/icons/favicon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"LINE Simulator\"",
+    "package-win": "electron-packager . LINESimulator --overwrite --asar=true --platform=win32 --arch=x64 --icon=src/icons/favicon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"LINE Simulator\"",
     "package-linux": "electron-packager . LINESimulator --overwrite --asar=true --platform=linux --arch=x64 --icon=src/icons/favicon.png --prune=true --out=release-builds"
   },
   "keywords": [
@@ -15,7 +15,6 @@
   "author": "kenakamu",
   "license": "MIT",
   "devDependencies": {
-    "appdmg": "^0.5.2",
     "browser-sync": "^2.24.6",
     "electron": "2.0.5",
     "electron-builder": "^20.26.0",

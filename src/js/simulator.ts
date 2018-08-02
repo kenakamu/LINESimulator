@@ -596,8 +596,8 @@ var messageId: string = "";
       "dummyToken",
       1462629479859,
       userId,
-      $('#hwid').val().toString(),
-      $('#type').val() as beaconType
+      $('#beacon_hwid').val().toString(),
+      $('#beacon_type').val() as beaconType
     );
 
     send(sendObject);

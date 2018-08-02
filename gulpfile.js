@@ -74,26 +74,26 @@ gulp.task('watch', () => {
 
 gulp.task('default', ['typescript', 'typescript-main', 'copy', 'watch']);
 
-gulp.task('packager', function (done) {
+gulp.task('win-packager', function (done) {
     return packager({
         dir: './',
-        out: './build',
-        name: 'linesimulator',
+        out: './release-builds',
+        name: 'LineSimulator',
         arch: 'x64',
         platform: 'win32',
         electronVersion: '2.0.5',
         overwrite: true,
-        icon: './src/favicon.ico'
+        icon: './src/icons/favicon.ico'
     });
 });
 
-gulp.task('installer', function () {
+gulp.task('win-installer', function () {
     return electronInstaller.createWindowsInstaller({
-        appDirectory: './build/linesimulator-win32-x64',
-        outputDirectory: './release',
+        appDirectory: './release-builds/LineSimulator-win32-x64',
+        outputDirectory: './release-builds',
         description: 'LINE Simulator',
         authors: 'kenakamu',
-        exe: 'linesimulator.exe',
+        exe: 'LineSimulator.exe',
         loadingGif:'./installer.gif'
     });
 });

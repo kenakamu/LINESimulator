@@ -14,12 +14,12 @@ function getInstallerConfig () {
   const outPath = path.join(rootPath, 'release-builds')
 
   return Promise.resolve({
-    appDirectory: path.join(outPath, 'line-simulator-win32-ia32/'),
+    appDirectory: path.join(outPath, 'LINESimulator-win32-x64/'),
     authors: 'Kenichiro Nakamura',
     noMsi: false,
     outputDirectory: path.join(outPath, 'windows-installer'),
-    exe: 'line-simulator.exe',
+    exe: 'LINESimulator.exe',
     setupExe: 'LINESimulatorInstaller.exe',
-    setupIcon: path.join(rootPath, 'src', 'favicon.ico')
+    setupIcon: path.join(rootPath, 'src', 'icons','favicon.ico')
   })
 }
