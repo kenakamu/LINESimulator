@@ -90,7 +90,7 @@ gulp.task('win-packager', function (done) {
 gulp.task('win-installer', function () {
     return electronInstaller.createWindowsInstaller({
         appDirectory: './release-builds/LineSimulator-win32-x64',
-        outputDirectory: './release-builds',
+        outputDirectory: './release-builds/win-installer',
         description: 'LINE Simulator',
         authors: 'kenakamu',
         exe: 'LineSimulator.exe',

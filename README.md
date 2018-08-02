@@ -1,12 +1,12 @@
-# LINE Simulator for BOT developer
+# LINE Simulator App for BOT developer
 
 Are you getting tired using physical device for debug your LINE bot? Yes I am! This project contains simulator to boost your developer productivity.
 
 This is electron base native application. There is web-based npm package available as well. For web-base app, check [master branch](https://github.com/kenakamu/LINESimulator/)
 
 # Install from installer
-If you just want to use it, install and run from install package from here.
-*Only Windows version available at the moment.
+For windows, download setup.exe from release and and install it.
+For Mac, download linesimulator.zip and unzip it.
 
 
 # Get it from GitHub
@@ -14,15 +14,6 @@ If you just want to use it, install and run from install package from here.
 - LINE developer account
 - node.js
 - And of course your LINE bot app :)
-
-## Simulator setup
-Use following commands to clone and install module. Then for Windows run npm start.
-```
-git clone https://github.com/kenakamu/LINESimulator/
-checkout native-app
-npm install
-npm start
-```
 
 # How this works
 This app works as LINE client simnulator, as well as LINE Platform simulator. All the request from your bot application shall come to this simulator, and it will redirect to LINE platform if necessary, otherwise it just returns the message to simulator UI.
@@ -60,13 +51,14 @@ const line = require('@line/bot-sdk');
 ```
 
 ## How to use the simulator.
-1. Open Chrome and connect to http://localhost:8080
-1. You will see the connection page. Enter your Bot API URL, user id, channel secret and token, then click "connect". You can get UserId, ChannelSecret and ChannelToke from [LINE Developer Portal](https://developers.line.me/console/) <br/>![settings.png](readme_img/settings.PNG)
-1. In the chat bar, enter any text and hit "Enter" or click send icon.<br/>![chatbar.png](readme_img/chatbar.PNG)
+1. Launch the application.
+1. You will see the main page. Enter your Bot API URL, user id, channel secret and token, then click "connect". You can get UserId, ChannelSecret and ChannelToke from [LINE Developer Portal](https://developers.line.me/console/) <br/>![mainpage.png](readme_img/mainpage.PNG).
+You can also check "always on top" to make the simulator always on top.
+1. Once connected, in the chat bar, enter any text and hit "Enter" or click send icon.<br/>![chatbar.png](readme_img/chatbar.PNG)
 1. Depending on your implementaion, you can see reply.<br/>![chatreply.png](readme_img/chatreply.PNG)
 
-## Update settings
-1. Simply click gear icon.
+## Change settings
+1. Close the simulator which takes you to the main page.
 1. Change settings and click connect.
 
 You can also specify any LINE user so this is useful to test with other user.
@@ -76,6 +68,7 @@ You can also specify any LINE user so this is useful to test with other user.
 1. Use the more menu area to send any non-text data. You can send image, sticker, location or system messages. <br/>![moremenu.png](readme_img/moremenu.PNG)
 
 ## See the JSON object
+1. Click "Raw data" icon.<br/>![rawdata.png](readme_img/rawdata.PNG)
 1. Select any sent or replied area.
 1. You see JSON object.<br/>![confirmjson.png](readme_img/confirmjson.PNG)
 1. Click close icon to close it.
@@ -84,8 +77,8 @@ You can also specify any LINE user so this is useful to test with other user.
 By using the simulator POC feature, you can quickly craft LINE Bot chat mock via UI only so that you don't have to write code to just show how it works to customers.
 
 ## Start POC
-1. Click POC Mode button at login. If you already connected, you can click settings icon (gear) anytime to switch the mode.
-<br/>![settings.png](readme_img/settings.PNG)
+1. Click POC Mode button at main screen. 
+<br/>![pocmode.png](readme_img/pocmode.PNG)
 1. You see bot reply box in POC mode.
 <br/>![botreply.png](readme_img/botreply.PNG)
 
@@ -116,7 +109,7 @@ By using the simulator POC feature, you can quickly craft LINE Bot chat mock via
 
 ## Load the chat
 1. To load the saved chat, click upload icon on the menu.
-<br/>![upload.png](readme_img/upload.PNG)
+<br/>![download.png](readme_img/download.PNG)
 1. Select the json file you saved before.
 
 # Common Features
@@ -144,5 +137,5 @@ You can simulate how keyboard hides the chat window.
 ## Rich Menu
 You can simulate how Rich Menu works. The default rich menu set in developer console cannot be simulated.
 1. Click rich menu icon in menu.<br/>![richmenu.png](readme_img/richmenu.PNG)
-1. You see rich menu if the user has one, otherwise see the alert.<br/>![withrichmenu.png](readme_img/withrichmenu.PNG)
+1. You see rich menu if the user has one, otherwise see the alert.
 1. Click the menu again to hide it.
