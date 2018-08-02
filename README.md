@@ -52,10 +52,13 @@ const line = require('@line/bot-sdk');
 
 ## How to use the simulator.
 1. Launch the application.
-1. You will see the main page. Enter your Bot API URL, user id, channel secret and token, then click "connect". You can get UserId, ChannelSecret and ChannelToke from [LINE Developer Portal](https://developers.line.me/console/) <br/>![mainpage.png](readme_img/mainpage.PNG).
+1. You will see the main page. Enter your Bot API URL, user id, channel secret and token, then click "connect". You can get UserId, ChannelSecret and ChannelToke from [LINE Developer Portal](https://developers.line.me/console/) 
+<br/><img width=600 src="readme_img/mainpage.PNG"><br/>
 You can also check "always on top" to make the simulator always on top.
-1. Once connected, in the chat bar, enter any text and hit "Enter" or click send icon.<br/>![chatbar.png](readme_img/chatbar.PNG)
-1. Depending on your implementaion, you can see reply.<br/>![chatreply.png](readme_img/chatreply.PNG)
+1. Once connected, in the chat bar, enter any text and hit "Enter" or click send icon.
+<br/><img width=400 src="readme_img/chatbar.PNG">
+1. Depending on your implementaion, you can see reply.
+<br/><img width=400 src="readme_img/chatreply.PNG">
 
 ## Change settings
 1. Close the simulator which takes you to the main page.
@@ -64,13 +67,15 @@ You can also check "always on top" to make the simulator always on top.
 You can also specify any LINE user so this is useful to test with other user.
 
 ## Send non-text
-1. Click "Right arrow" icon either in chatbar or in menu.<br/>![more.png](readme_img/more.PNG)
-1. Use the more menu area to send any non-text data. You can send image, sticker, location or system messages. <br/>![moremenu.png](readme_img/moremenu.PNG)
+1. Click "Right arrow" icon either in chatbar or in menu.
+<br/><img width=300 src="readme_img/more.PNG">
+1. Use the more menu area to send any non-text data. You can send image, sticker, location or system messages. 
+<br/><img width=400 src="readme_img/moremenu.PNG">
 
 ## See the JSON object
-1. Click "Raw data" icon.<br/>![rawdata.png](readme_img/rawdata.PNG)
+1. Click "Raw data" icon.<br/><img width=300 src="readme_img/rawdata.PNG">
 1. Select any sent or replied area.
-1. You see JSON object.<br/>![confirmjson.png](readme_img/confirmjson.PNG)
+1. You see JSON object.<br/><img width=600 src="readme_img/confirmjson.PNG">
 1. Click close icon to close it.
 
 # LINE BOT POC
@@ -78,38 +83,38 @@ By using the simulator POC feature, you can quickly craft LINE Bot chat mock via
 
 ## Start POC
 1. Click POC Mode button at main screen. 
-<br/>![pocmode.png](readme_img/pocmode.PNG)
+<br/><img width=600 src="readme_img/pocmode.PNG">
 1. You see bot reply box in POC mode.
-<br/>![botreply.png](readme_img/botreply.PNG)
+<br/><img width=600 src="readme_img/botreply.PNG">
 
 ## Send message as user
 1. To send simple text message, use chatbox in the simulator to send the text.
-<br/>![chatbar.png](readme_img/chatbar.PNG)
+<br/><img width=400 src="readme_img/chatbar.PNG">
 1. To send more complex message, use more menu button to send it.
-<br/>![more.png](readme_img/more.PNG)
-<br/>![moremenu.png](readme_img/moremenu.PNG)
+<br/><img width=300 src="readme_img/more.PNG">
+<br/><img width=400 src="readme_img/moremenu.PNG">
 
 ## Send message as bot
 1. Use bot reply box. Select the type you want to send. 
 1. For carousel or image carousel template, click "add new column" button first to start crafting the message.
-<br/>![addnewcolumn.png](readme_img/addnewcolumn.PNG)
+<br/><img width=500 src="readme_img/addnewcolumn.PNG">
 1. You can add or delete the columns as you want.
 1. For template, you see the preview in the box and it update the value as you type.
-<br/>![confirm.png](readme_img/confirm.PNG)
+<br/><img width=500 src="readme_img/confirm.PNG">
 
 ## Delete or move the chat item
 1. If you want to delete or move the chat item, select the item in the simulator.
-<br/>![chatitemmenu.png](readme_img/chatitemmenu.PNG)
+<br/><img width=300 src="readme_img/chatitemmenu.PNG">
 1. Click trash icon to delete, or arrows to move the chat item as you wish.
 
 ## Save the chat
 1. In case you want to save the chat, click download icon on the menu.
-<br/>![download.png](readme_img/download.PNG)
+<br/><img width=50 src="readme_img/download.PNG">
 1. It will be downloaded as json file. You can modify the json file if you want, and it adhere to LINE Messaging API format.
 
 ## Load the chat
 1. To load the saved chat, click upload icon on the menu.
-<br/>![download.png](readme_img/download.PNG)
+<br/><img width=50 src="readme_img/download.PNG">
 1. Select the json file you saved before.
 
 # Common Features
@@ -124,18 +129,22 @@ At the moment, the simulator can:
 At the moment, you need to manually change the size. Just simply modify the value of css variables in public/css/site.css.
 
 ## Zoom
-1. Click zoomin or zoomout in menu.<br/>![zoom.png](readme_img/zoom.PNG)
+1. Click zoomin or zoomout in menu.
+<br/><img width=100 src="readme_img/zoom.PNG">
 1. Confirm the only simulator zoomin/out.
 
 When you need to zoom entire page, simply use browser zoom feature.
 
 ## Keyboard
 You can simulate how keyboard hides the chat window.
-1. Click keyboard icon either in chatbar or in menu.<br/>![keyboard.png](readme_img/keyboard.PNG)
-1. You see keyboard is appearing in the chat. You cannot type via keyboard as this is just an image.<br/>![withkeyboard.png](readme_img/withkeyboard.PNG)
+1. Click keyboard icon either in chatbar or in menu.
+<br/><img width=300 src="readme_img/keyboard.PNG">
+1. You see keyboard is appearing in the chat. You cannot type via keyboard as this is just an image.
+<br/><img width=300 src="readme_img/withkeyboard.PNG">
 
 ## Rich Menu
 You can simulate how Rich Menu works. The default rich menu set in developer console cannot be simulated.
-1. Click rich menu icon in menu.<br/>![richmenu.png](readme_img/richmenu.PNG)
+1. Click rich menu icon in menu.
+<br/><img width=300 src="readme_img/richmenu.PNG">
 1. You see rich menu if the user has one, otherwise see the alert.
 1. Click the menu again to hide it.
