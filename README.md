@@ -75,7 +75,7 @@ line_bot_api = LineBotApi(channel_access_token, "http://localhost:8080")
 ```
 **Node.js**: for node.js it is slightly different. Specify the URL with /bot at the end for process.env.API_BASE_URL. You can do so in config or write it in the code, but you need to do so before you loda @line/bot-sdk module.
 ```javascript
-process.env.API_BASE_URL = "http://localhost:8080/bot";
+process.env.API_BASE_URL = "http://localhost:8080";
 const line = require('@line/bot-sdk');
 ```
 
