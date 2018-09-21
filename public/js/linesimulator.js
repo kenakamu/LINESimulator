@@ -306,10 +306,21 @@ function parseDataAndReturnListItem(data) {
     }
     else if (data.template.type == "confirm") {
       var reply = `<li tabindex="1" data='${JSON.stringify(data)}' class="chat-bot chat-template chat-template-confirm" onclick='onSelectChatItem($(this))'>
-      <div class="chat-template-confirm-text">${data.template.text}</div>
-      <div class="chat-template-confirm-yes" onclick="{sendTextMessage('${data.template.actions[0].text}');}">${data.template.actions[0].label}</div>
-      <div class="chat-template-confirm-no" onclick="{sendTextMessage('${data.template.actions[1].text}');}">${data.template.actions[1].label}</div>
-      </li>`;
+      <div class="chat-template-confirm-text">${data.template.text}</div>`;
+      for (let i = 0; i < data.template.actions.length; i++) {
+        let action = data.template.actions[i];
+        let action_text = action.displayText || action.text;
+        let action_class = 'chat-template-confirm-' + ( ( i == 0 ) ? 'yes' : 'no' );
+        if (action.type == "postback") {
+          if (action_text) {
+            reply += `<div class="${action_class}" onclick="{sendPostback('${action.data}');sendTextMessage('${action_text}', true);}">${action.label}</div>`;
+          }
+          else {
+            reply += `<div class="${action_class}" onclick="{sendPostback('${action.data}');}">${action.label}</div>`;
+          }
+        }
+      }
+      reply += '</li>';
     }
     else if (data.template.type == "carousel") {
       var reply = `<li class="chat-bot chat-icon-only"></li>
@@ -550,7 +561,7 @@ function send(sendObject) {
   });
 }
 // Send text message.
-function sendTextMessage(text) {
+function sendTextMessage(text, displayOnly) {
   // Craft LINE message
   var sendObject = {
     "replyToken": "dummyToken",
@@ -568,7 +579,9 @@ function sendTextMessage(text) {
   };
 
   appendUserInputToThread(sendObject);
-  send(sendObject);
+  if ( ! displayOnly ) {
+    send(sendObject);
+  }
 }
 // Send postback event.
 function sendPostback(postback, params) {
