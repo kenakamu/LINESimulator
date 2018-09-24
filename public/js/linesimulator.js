@@ -309,15 +309,18 @@ function parseDataAndReturnListItem(data) {
       <div class="chat-template-confirm-text">${data.template.text}</div>`;
       for (let i = 0; i < data.template.actions.length; i++) {
         let action = data.template.actions[i];
-        let action_text = action.displayText || action.text;
         let action_class = 'chat-template-confirm-' + ( ( i == 0 ) ? 'yes' : 'no' );
         if (action.type == "postback") {
+          let action_text = action.displayText || action.text;
           if (action_text) {
             reply += `<div class="${action_class}" onclick="{sendPostback('${action.data}');sendTextMessage('${action_text}', true);}">${action.label}</div>`;
           }
           else {
             reply += `<div class="${action_class}" onclick="{sendPostback('${action.data}');}">${action.label}</div>`;
           }
+        }
+        else if (action.type == "message") {
+          reply += `<div class="${action_class}" onclick="{sendTextMessage('${action.text}');}">${action.label}</div>`;
         }
       }
       reply += '</li>';
