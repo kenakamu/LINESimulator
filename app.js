@@ -217,6 +217,7 @@ app.all('/*', function (req, res) {
 function handleRequest(req, res) {
     // remove host header
     delete req.headers['host'];
+    delete req.headers['content-length'];
     // Craft URL for LINE Platform.
     var url = req.url;
     if (url.indexOf('oauth') > -1) {
@@ -228,10 +229,11 @@ function handleRequest(req, res) {
     request({
         headers: req.headers,
         uri: `${lineAPIUrl}${url}`,
+        json: req.body,
         method: req.method
     },
         function (error, response, body) {
-            res.send(body);
+            res.status(response.statusCode).send(body);
         }
     );
 }
