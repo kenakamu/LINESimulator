@@ -50,10 +50,6 @@ gulp.task('copy-img', () => {
         .pipe(cache('img'))
         .pipe(gulp.dest('./dist/img'));
 });
-gulp.task('copy-data', () => {
-    return gulp.src('./src/data')
-        .pipe(gulp.dest('./dist'));
-});
 gulp.task('copy-model', () => {
     return gulp.src('./src/models/*')
         .pipe(cache('models'))
@@ -64,7 +60,7 @@ gulp.task('copy-temp', () => {
         .pipe(gulp.dest('./dist/temp'));
 });
 
-gulp.task('copy', ['copy-css', 'copy-html', 'copy-img', 'copy-data', 'copy-model', 'copy-temp']);
+gulp.task('copy', ['copy-css', 'copy-html', 'copy-img', 'copy-model', 'copy-temp']);
 
 gulp.task('watch', () => {
     gulp.watch('./src/**/*.ts', ['typescript']);

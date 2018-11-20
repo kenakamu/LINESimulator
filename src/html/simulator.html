@@ -61,6 +61,11 @@
                     </i>
                 </div>
                 <div>
+                    <i class="fas fa-play-circle fa-inverse fa-2x" onclick="toggleAutoplay();">
+                        <span>auto play</span>
+                    </i>
+                </div>
+                <div>
                     <i class="fas fa-download fa-inverse fa-2x" onclick="saveChat();">
                         <span>Save Chat Data</span>
                     </i>
@@ -73,6 +78,7 @@
                 </div>
             </div>
         </div>
+
         <!-- LINE client simulator -->
         <div class="simulator-wrap">
             <div class="simulator" style="-webkit-app-region: drag">
@@ -146,6 +152,15 @@
                     <!-- end chat-message -->
                 </div>
             </div>
+        </div>
+
+        <!-- auto-play  -->
+        <div class="auto-play hide">
+            <p>Enter inputs and click play to auto play</p>
+            <div>
+                <textarea rows=10 class="inputs"></textarea>
+            </div>
+            <a class="col-xs-12 btn btn-sm btn-success" onclick="autoPlay()">Play</a>
         </div>
 
         <!-- Send media, location, sticker, etc.  -->
@@ -293,7 +308,7 @@
                     </div>
                     <a class="col-md-2 btn btn-sm btn-success" onclick="sendStickerFromBot()">Send</a>
                 </div>
-                <!-- Send Sticker -->
+                <!-- Send Address -->
                 <div role="tabpanel" class="tab-pane bot-chat-box" id="location">
                     <div class="col-md-10">
                         <div class="col-md-3 row">Title: </div>
@@ -702,6 +717,7 @@
     <script type="text/javascript" src="./../js/poc.js"></script>
     <script type="text/javascript" src="./../js/raw.js"></script>
     <script type="text/javascript" src="./../js/simulator.js"></script>
+    <script type="text/javascript" src="./../js/autoplay.js"></script>
     <script>if (window.module) module = window.module;</script>
 </body>
 

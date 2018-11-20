@@ -41,6 +41,9 @@ var messageId: string = "";
       var li = parseDataAndReturnListItem(data.messages[i]);
       // append the reply.
       appendBotReplyToThread(li);
+      if(autoPlayMode){
+        autoPlay();
+      }
     }
   }
   // Update time
@@ -82,7 +85,6 @@ var messageId: string = "";
   setInterval(updateTime, 60000);
   // Setup key pressdown event.
   bindHandlers();
-
   // Reset to default size.
   function resetSize() {
     screenHeigt = screen.availHeight;

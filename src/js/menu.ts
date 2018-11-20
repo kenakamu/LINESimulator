@@ -11,7 +11,7 @@
     let moreMenu = $('.moreMenu');
     let settings = $('.settings');
     let chatRaw = $('.chat-raw');
-
+    let autoPlay = $('.auto-play');
     function toggleKeyboard() {
         chatthread.removeClass('richmenu');
         richmenu.removeClass('visible');
@@ -168,6 +168,20 @@
             chatRaw.addClass("hide");
         }
     }
+    function toggleAutoplay() {
+        if (autoPlay.hasClass("hide")) {
+            if (!pocMode) {
+                window.resizeTo(window.innerWidth + 400, window.innerHeight);
+            }
+            autoPlay.removeClass("hide");
+        }
+        else {
+            if (!pocMode) {
+                window.resizeTo(window.innerWidth - 400, window.innerHeight);
+            }
+            autoPlay.addClass("hide");
+        }
+    }
     var numOfSim = 1;
     function addSimulator() {
         var newSimulator = $('.simulator:first').clone();
@@ -200,7 +214,7 @@
         var reader = new FileReader();
         reader.onload = function (event) {
 
-            let data = JSON.parse(window.atob(event.target.result.split(',')[1]));
+            let data = JSON.parse(new Buffer(event.target.result.split(',')[1],'base64').toString('utf8'));
             data.forEach(function (jsonData) {
                 // Check replyToken to see if this is from bot or user.
                 if (jsonData.replyToken == null) {
@@ -224,5 +238,5 @@
         // Read in the image file as a data URL.
         reader.readAsDataURL((<HTMLInputElement>$('#loadJsonFile')[0]).files[0]);
     }
-    //#endregion
+    //#endregion 
 }

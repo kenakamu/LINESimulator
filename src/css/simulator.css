@@ -516,3 +516,29 @@ body{
     width: 100%;
 }
 /*#endregion more menu*/
+
+/*#region auto play*/
+.auto-play {
+    background: black;
+    border-color: lightgray;
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 2px;
+    bottom: 0;
+    box-shadow: 15px 15px 15px rgba(80,80,80,.5);
+    color: white;
+    float: left;
+    padding: 12px;
+    position: relative;
+    width: 400px;
+}
+.auto-play .inputs{
+    background-color: black;
+    border-width: 0px;
+    color:white;    
+    font-size: 13px;
+    overflow-y: hidden;
+    width: 370px;   
+    word-wrap: break-word;
+}
+/*#endregion auto play*/
