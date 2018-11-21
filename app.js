@@ -202,7 +202,7 @@ app.all('/*', function (req, res) {
         res.sendStatus(200);
     }
     // if it request content
-    else if (url.indexOf('content') > -1) {
+    else if (url.indexOf('content') > -1 && req.method.toLowerCase() == 'get') {
         // The actual file sit in public\temp. Returns the file with messageId
         let messageId = url.slice(url.indexOf('message') + 8, url.indexOf('content') - 1);
         var files = fs.readdirSync(path.join(__dirname, 'public', 'temp', messageId));
@@ -217,6 +217,7 @@ app.all('/*', function (req, res) {
 function handleRequest(req, res) {
     // remove host header
     delete req.headers['host'];
+    delete req.headers['content-length'];
     // Craft URL for LINE Platform.
     var url = req.url;
     if (url.indexOf('oauth') > -1) {
@@ -225,13 +226,21 @@ function handleRequest(req, res) {
     else if (url.indexOf('bot') > -1) {
         url = url.slice(url.indexOf('bot'), url.length);
     }
-    request({
+    var options = {
         headers: req.headers,
         uri: `${lineAPIUrl}${url}`,
         method: req.method
-    },
+    };
+    if (req.body && req.body instanceof Buffer) {
+        Object.assign(options, { body: req.body })
+    }
+    else if (req.body && req.body instanceof Object) {
+        Object.assign(options, { json: req.body })
+    }
+    request(options,
         function (error, response, body) {
-            res.send(body);
+            if (error) console.error(error);
+            res.status(response.statusCode).send(body);
         }
     );
 }
