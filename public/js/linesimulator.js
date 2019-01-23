@@ -572,7 +572,7 @@ function sendTextMessage(text, displayOnly) {
     "timestamp": 1462629479859,
     "source": {
       "type": "user",
-      "userId": userId
+      "userId": "U1234567890abcdef01234567890abcde"
     },
     "message": {
       "id": "325708",
