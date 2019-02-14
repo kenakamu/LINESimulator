@@ -722,6 +722,57 @@ function sendBeacon() {
 
   send(sendObject);
 }
+function sendMemberJoined() {
+  // Craft LINE message
+  var sendObject = {
+    "replyToken": "0f3779fba3b349968c5d07db31eabf65",
+    "type": "memberJoined",
+    "timestamp": 1462629479859,
+    "source": {
+      "type": "group",
+      "groupId": "C4af4980629..."
+    },
+    "joined": {
+      "members": [
+        {
+          "type": "user",
+          "userId": "U4af4980629..."
+        },
+        {
+          "type": "user",
+          "userId": "U91eeaf62d9..."
+        }
+      ]
+    }
+  }
+
+  send(sendObject);
+}
+function sendMemberLeft() {
+  // Craft LINE message
+  var sendObject = {
+    "type": "memberLeft",
+    "timestamp": 1462629479960,
+    "source": {
+      "type": "group",
+      "groupId": "C4af4980629..."
+    },
+    "left": {
+      "members": [
+        {
+          "type": "user",
+          "userId": "U4af4980629..."
+        },
+        {
+          "type": "user",
+          "userId": "U91eeaf62d9..."
+        }
+      ]
+    }
+  }
+
+  send(sendObject);
+}
 //#endregion
 
 //#region Send data as Bot (POC features)
