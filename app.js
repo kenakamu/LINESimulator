@@ -199,7 +199,7 @@ app.all('/*', function (req, res) {
     // reply, push and multicast will be simply pass to UI.
     if (url.indexOf('reply') > -1 || url.indexOf('push') > -1 || url.indexOf('multicast') > -1) {
         io.emit('reply', req.body);
-        res.sendStatus(200);
+        res.status(200).send({});
     }
     // if it request content
     else if (url.indexOf('content') > -1) {
