@@ -55,6 +55,8 @@ docker container run -d --rm -p 8080:8080 LineSimulator
 
 When container is running in the background, you can use your browser to visit *http://localhost:8080*.
 
+For *Bot API Server Address* setting, if your bot server is running on the same host as Simulator container, you may use `host.docker.internal` instead of `localhost` to specify the server address.
+
 # How this works
 This app works as LINE client simnulator, as well as LINE Platform simulator. All the request from your bot application shall come to this simulator, and it will redirect to LINE platform if necessary, otherwise it just returns the message to simulator UI.
 
