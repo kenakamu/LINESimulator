@@ -40,6 +40,19 @@ npm startLinux
 ```
 意図したブラウザが起動しない場合は手動で http://localhost:8080 に接続してください。
 
+### Docker コンテナとして実行
+
+docker が動作する環境であれば、docker 実行も可能。ソースがあるフォルダーで以下 docker コマンドを実行。
+
+```bash
+docker image build --tag=linesimulator .
+docker container run -d --rm -p 8080:8080 linesimulator
+```
+
+コンテナが起動したら、ブラウザで *http://localhost:8080* にアクセス。
+
+ボットが同じポートですでに起動している場合は、`host.docker.internal` を `localhost` の代わりに指定します。
+
 # 動作原理
 このアプリは LINE クライアントのシミュレーターとして機能すると同時に、LINE プラットフォームのシミュレーターとしても機能します。Bot アプリからの送信はすべてのこのシミュレーターに送信され、必要に応じて LINE プラットフォームに転送されます。そして結果がシミュレーターの画面に表示されます。
 
