@@ -49,8 +49,8 @@ If you prefer using different browser, then open it and manully connect to http:
 `cd` to the directory where you store the source code, then use the following commands to build docker image and run Simulator in the container.
 
 ```bash
-docker image build --tag=LineSimulator .
-docker container run -d --rm -p 8080:8080 LineSimulator
+docker image build --tag=linesimulator .
+docker container run -d --rm -p 8080:8080 linesimulator
 ```
 
 When container is running in the background, you can use your browser to visit *http://localhost:8080*.
