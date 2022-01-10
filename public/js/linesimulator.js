@@ -355,7 +355,7 @@ function parseDataAndReturnListItem(data) {
             }
           }
           else if (action.type == "message") {
-            reply += `<div class="chat-template-buttons-button" onclick="{sendTextMessage('${action.text}');}">${action.text}</div>`;
+            reply += `<div class="chat-template-buttons-button" onclick="{sendTextMessage('${action.text}');}">${action.label}</div>`;
           }
           else if (action.type == "uri") {
             reply += `<div class="chat-template-buttons-button"><a href="${action.uri}" target="_blank">${action.label}</a></div>`;
